@@ -1,0 +1,647 @@
+/* Reseta o estilo da página */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: #232325;
+  color: #FFFFFF;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header, section, footer {
+  padding: 20px;
+  margin: 10px;
+}
+
+/* Cor secundária - 30% */
+header, footer {
+  background-color: #232325;
+}
+
+/* Detalhes do header */
+header h1, header h2 {
+  margin: 0;
+  padding: 10px 0;
+}
+
+/* Botão para mudar o idioma */
+button {
+  background-color: transparent;
+  border: 2px solid #785E3B;
+  color: #785E3B;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Botão hover */
+button:hover {
+  background-color: #785E3B;
+  color: #FFFFFF;
+}
+
+/* Cor de acento - 10% */
+#sobreTitle, #formacaoTitle {
+  color: #785E3B;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+
+/* Definindo o estilo do banner */
+/* Banner */
+.banner {
+  background-color: #2C2B30; /* Cor de fundo */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  margin-bottom: 100px; 
+}
+
+/* Container da imagem e da info */
+.banner-content {
+  display: flex; /* Usando flexbox para alinhar os itens */
+  width: 100%; /* Ocupa toda a largura do banner */
+  position: relative; /* Para o posicionamento do cursor e outras animações */
+  overflow: hidden; /* Impede que o conteúdo ultrapasse a div */
+}
+
+/* Imagem redonda */
+.profile-image {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%; /* Forma redonda */
+  border: 5px solid #434343; /* Borda da imagem */
+  object-fit: cover;
+  margin-left: 5%;
+}
+
+/* Info Content */
+.info-content {
+  position: absolute;
+  left: 510px; /* Distância da imagem */
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%);
+  opacity: 0; /* Inicialmente invisível */
+}
+
+.banner-content:hover .info-content {
+  opacity: 1;
+}
+
+/* Nome com animação de digitação e cursor */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%); /* Começa fora da tela */
+    opacity: 0; /* Começa invisível */
+  }
+  to {
+    transform: translateX(0); /* Move para a posição original */
+    opacity: 1; /* Torna visível */
+  }
+}
+
+.name {
+  top: -80px;
+  font-size: 32px;
+  margin-left: -40px;
+  font-family: 'Press Start 2P', cursive; /* Fonte estilo 8 bits */
+  display: inline-block;
+  position: relative;
+  color: #ffffff; /* Cor preta ou ajuste conforme necessário */
+  opacity: 0; /* Começa invisível */
+  animation: slideIn 0.5s forwards; /* Adiciona a animação de deslizamento */
+  position: relative;
+  opacity: 0;
+  transform: translateX(-50px); /* Deslocamento inicial para fora da imagem */
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.cursor {
+  font-size: 32px;
+  font-family: 'Press Start 2P', cursive;
+  opacity: 1;
+  animation: blink 1s step-start infinite;
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+/* Animação de deslizamento */
+.resume, .linkedin-icon, .download-btn {
+  position: relative;
+  opacity: 0;
+  transform: translateX(-50px); /* Deslocamento inicial para fora da imagem */
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+/* Nome */
+.banner-content:hover .name {
+  opacity: 1;
+  transform: translateX(0); /* Volta à posição original */
+  transition-delay: 0.1s; /* Pequeno atraso */
+  margin-left: -20px;
+}
+
+/* Resumo */
+.banner-content:hover .resume {
+  opacity: 1;
+  transform: translateX(0); /* Volta à posição original */
+  transition-delay: 0.2s; /* Atraso maior que o nome */
+  margin-left: -10px;
+}
+
+/* LinkedIn */
+.banner-content:hover .linkedin-icon {
+  opacity: 1;
+  transform: translateX(0); /* Volta à posição original */
+  transition-delay: 0.3s; /* Atraso maior que o resumo */
+  margin-left: -15px;
+}
+
+.linkedin-icon img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  display: flex;
+}
+
+/* Botão de Download */
+.banner-content:hover .download-btn {
+  opacity: 1;
+  transform: translateX(0); /* Volta à posição original */
+  transition-delay: 0.4s; /* Atraso maior que os anteriores */
+  margin-left: -20px;
+}
+
+.download-btn {
+  top: 60px;
+  left: -40px;
+  padding: 10px 20px;
+  background-color: #434343;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.download-btn:hover {
+  background-color: #333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .info-content {
+    left: 320px; /* Ajustar para telas menores */
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .resume {
+    font-size: 16px;
+  }
+
+  .download-btn {
+    padding: 8px 16px;
+  }
+}
+
+/* Rodapé */
+footer {
+  text-align: center;
+  color: #FFFFFF;
+}
+/* Estilos gerais para a timeline */
+/* Estilização Geral */
+/* Estilo base da timeline */
+.timeline-container {
+  display: flex;
+  flex-direction: column; /* Organiza verticalmente a timeline */
+  align-items: flex-start; /* Alinha as seções à esquerda */
+  margin-left: 50px; /* Espaço entre a borda da página e a timeline */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.timeline-container.visible {
+  opacity: 1;
+}
+
+.timeline-section {
+  display: flex;
+  flex-direction: row; /* Organiza a timeline e a seção horizontalmente */
+  align-items: center;
+  margin-bottom: 50px; /* Espaço entre cada seção */
+}
+
+/* Cada bloco da timeline e sua respectiva seção */
+.timeline-block {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 50px;
+}
+
+/* Linha da timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px; /* Espaço para a timeline */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.timeline.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.point {
+  width: 15px;
+  height: 15px;
+  background-color: #FFD700; /* Cor inicial */
+  border-radius: 50%;
+  margin-bottom: 10px;
+  transition: background-color 0.5s ease; /* Transição suave */
+}
+
+.line {
+  width: 2px;
+  height: 100px;
+  background-color: #FFD700; /* Cor inicial */
+  transition: background-color 0.5s ease; /* Transição suave */
+}
+
+/* Ao passar o mouse, faz a transição para a cor amarela */
+.point:hover,
+.line:hover {
+  background-color: #785E3B; /* Cor final */
+}
+.year {
+  font-size: 18px;
+  margin-bottom: 15px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.year.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estilização da seção */
+.section-content {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateX(-50px); /* Começa deslocada à esquerda */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.section-content.active {
+  opacity: 1;
+  transform: translateX(0); /* Entra suavemente */
+}
+
+/* Alinhamento lateral das seções */
+.timeline-block {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.timeline-block .section-content {
+  margin-left: 20px; /* Espaço entre a timeline e a seção */
+  opacity: 0;
+  transform: translateX(50px); /* Deslocamento inicial para entrada lateral */
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.timeline-block .section-content.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .section-content {
+    transform: none;
+  }
+}
+
+/* Estilos para a timeline e as seções */
+.section-content {
+  opacity: 0; /* Inicialmente invisível */
+  transform: translateX(-50px); /* Fora da tela à esquerda */
+  max-width: 600px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #333;
+  border: 1px solid #232325;
+  border-radius: 4px;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  box-shadow: 0 0 2px #FFD700, 0 0 5px #FFD700, 0 0 7px #FFD700; /* Efeito neon amarelo */
+}
+
+/* Quando a seção se torna visível, podemos também aplicar o efeito neon se necessário */
+.section-content.visible {
+  opacity: 1; /* Torna a seção visível */
+  transform: translateX(0); /* Move para a posição original */
+}
+
+.section-content.active {
+  opacity: 1;
+  transform: translateX(0); /* Move para sua posição natural */
+}
+
+/* Para alinhar a seção à direita da timeline */
+.timeline-container {
+  display: flex;
+  align-items: flex-start; /* Alinha ao topo */
+  justify-content: center; /* Centraliza a timeline no meio */
+}
+
+.timeline {
+  margin-right: 40px; /* Espaçamento entre a timeline e a seção */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .section-content {
+    transform: none;
+    margin-left: 20px;
+  }
+}
+
+.resume, .linkedin-icon, .download-btn {
+  position: relative;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.banner-content:hover .name {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.1s;
+}
+
+.banner-content:hover .resume {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
+}
+
+.banner-content:hover .linkedin-icon {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.linkedin-icon img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.banner-content:hover .download-btn {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+.download-btn {
+  padding: 10px 20px;
+  background-color: #434343;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 15px;
+}
+
+.download-btn:hover {
+  background-color: #333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .info-content {
+    left: 320px;
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .resume {
+    font-size: 16px;
+  }
+
+  .download-btn {
+    padding: 8px 16px;
+  }
+}
+
+
+.projetosh2 h2 {
+  top: 150px;
+  font-size: 60px; /* Aumenta o tamanho da fonte */
+  text-align: center; /* Centraliza o texto */
+  margin-bottom: 50px; /* Adiciona 50px de espaço abaixo */
+}
+
+/* Container geral dos projetos */
+.projects-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  background-color: #352a1c;
+}
+
+.projects-container::before,
+.projects-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Espessura da linha */
+  background: #FFD700; /* Cor do neon amarela */
+  box-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700, 0 0 45px #FFD700; /* Efeito de neon */
+}
+
+.projects-container::before {
+  top: 0; /* Linha superior */
+}
+
+.projects-container::after {
+  bottom: 0; /* Linha inferior */
+}
+
+/* Cada projeto terá uma altura e largura fixas */
+.projeto {
+  background-color: #333;
+  border: 1px solid #232325;
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+  position: relative;
+  transform: translateY(100%); /* Inicialmente fora do container, na borda inferior */
+  transition: transform 1s ease, opacity 1s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ícones */
+.icons {
+  align-self: flex-end; /* Alinha os ícones ao final do quadrado */
+  margin-top: 10px;
+}
+
+.icons img {
+  width: 50px; /* Largura do ícone */
+  height: 50px; /* Altura do ícone */
+}
+
+/* Ativa a animação quando a classe 'active' é adicionada */
+.projeto.active {
+  opacity: 1;
+  transform: translateY(0); /* Sobe para o centro */
+}
+
+/* Animação com escada horizontal - com delays */
+.projeto:nth-child(1) {
+  transition-delay: 0.3s;
+}
+
+.projeto:nth-child(2) {
+  transition-delay: 0.6s;
+}
+
+.projeto:nth-child(3) {
+  transition-delay: 0.9s;
+}
+
+.projeto:nth-child(4) {
+  transition-delay: 1.2s;
+}
+
+.icon-container {
+  display: flex;
+  flex-wrap: wrap; /* Para permitir que as mini divs ocupem várias linhas, se necessário */
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #232325;
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-div {
+  width: 100px; /* Largura da mini div */
+  height: 100px; /* Altura da mini div */
+  background-color: #333;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(50px); /* Para que as divs surjam de baixo para cima */
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  margin: 10px; /* Espaçamento entre as mini divs */
+}
+
+.mini-div img {
+  width: 80px; /* Ajusta a imagem para caber dentro da mini div, com uma pequena margem */
+  height: 80px; /* Mantém a proporção da altura da imagem */
+  object-fit: contain; /* Garante que a imagem seja ajustada ao container sem distorção */
+}
+
+.icon-container.visible .mini-div {
+  opacity: 1;
+  transform: translateY(0); /* Faz as divs emergirem para a posição original */
+}
+
+/* Delay gradativo para cada mini-div */
+.mini-div:nth-child(1) {
+  transition-delay: 0.2s;
+}
+
+.mini-div:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.mini-div:nth-child(3) {
+  transition-delay: 0.6s;
+}
+
+.mini-div:nth-child(4) {
+  transition-delay: 0.8s;
+}
+
+.mini-div:nth-child(5) {
+  transition-delay: 1s;
+}
+
+.mini-div:nth-child(6) {
+  transition-delay: 1.2s;
+}
+
+.mini-div:nth-child(7) {
+  transition-delay: 1.4s;
+}
+
+.mini-div:nth-child(8) {
+  transition-delay: 1.6s;
+}
+
+.mini-div:nth-child(9) {
+  transition-delay: 1.8s;
+}
+
+
+
+footer {
+  text-align: center;
+  color: #FFFFFF;
+}
+
+footer i {
+  color: #785E3B;
+  margin-right: 8px;
+}

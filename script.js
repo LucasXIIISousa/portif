@@ -4,10 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleButton.addEventListener("click", function () {
         const isEnglish = toggleButton.textContent === "Switch to English";
 
-        // Atualiza o texto do botão
         toggleButton.textContent = isEnglish ? "Mudar para Português" : "Switch to English";
 
-        // Atualiza os textos da página
         document.getElementById("name").textContent = isEnglish ? "Lucas Sousa" : "Lucas Sousa";
         document.getElementById("occupation").textContent = isEnglish ? "Developer and Systems Analyst" : "Desenvolvedor e Analista de Sistemas";
         document.getElementById("sobreTitle").textContent = isEnglish ? "About Me" : "Sobre Mim";
@@ -54,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(typeEffect, 500);
     });
 
-    // Função para detectar o scroll e ativar o fade-in
     window.addEventListener('scroll', function() {
         const sections = document.querySelectorAll('.fade-section');
         const scrollPos = window.innerHeight + window.scrollY;
@@ -68,8 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-// Função para verificar se o elemento está visível na viewport
 function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
     return (
@@ -80,18 +75,6 @@ function isElementInViewport(el) {
     );
 }
 
-// Função para verificar se o elemento está visível na viewport
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-// Função para aumentar a altura da linha conforme o scroll
 function scrollTimeline() {
     const timelines = document.querySelectorAll('.timeline');
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -101,11 +84,9 @@ function scrollTimeline() {
         const line = timeline.querySelector('.line');
         const timelineOffset = timeline.offsetTop;
 
-        // Verifica se o scroll já passou da timeline
         if (scrollTop + windowHeight >= timelineOffset) {
-            // Calcula a altura da linha proporcional ao scroll
             const newHeight = Math.min(200, (scrollTop + windowHeight - timelineOffset) / 2); 
-            line.style.height = newHeight + 'px'; // Ajusta a altura da linha
+            line.style.height = newHeight + 'px';
         }
     });
 }
@@ -113,10 +94,8 @@ function scrollTimeline() {
 // Evento de scroll
 window.addEventListener('scroll', scrollTimeline);
 
-// Inicializa a animação caso os elementos estejam visíveis no carregamento da página
 document.addEventListener('DOMContentLoaded', scrollTimeline);
 
-// Função para verificar se o elemento está visível na viewport
 function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
     return (
@@ -133,19 +112,15 @@ function animateSections() {
     
     sections.forEach(section => {
         if (isElementInViewport(section)) {
-            section.classList.add('active'); // Ativa a animação
+            section.classList.add('active');
         }
     });
 }
 
-// Evento de scroll para ativar a animação
 window.addEventListener('scroll', animateSections);
 
-// Inicializa a animação caso os elementos estejam visíveis no carregamento da página
 document.addEventListener('DOMContentLoaded', animateSections);
 
-// Função para verificar se o elemento está visível na viewport
-// Função para verificar se o elemento está visível na viewport
 // Função para verificar se o elemento está visível na viewport
 function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
@@ -160,24 +135,22 @@ function toggleSectionVisibility() {
     
     sections.forEach(section => {
         if (isElementInViewport(section)) {
-            section.classList.add('active');  // Adiciona animação quando visível
+            section.classList.add('active');  
         } else {
-            section.classList.remove('active');  // Remove animação quando invisível
+            section.classList.remove('active');  
         }
     });
 }
 
-// Escuta o scroll para ativar a animação e recolher a seção
 window.addEventListener('scroll', toggleSectionVisibility);
 
-// Verifica as seções na primeira carga
 document.addEventListener('DOMContentLoaded', toggleSectionVisibility);
 
 document.addEventListener('DOMContentLoaded', () => {
     const timelineContainer = document.querySelector('.timeline-container');
     setTimeout(() => {
         timelineContainer.classList.add('visible');
-    }, 500); // Delay de 500ms
+    }, 500);
 });
 
 
@@ -249,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (entry.isIntersecting) {
           iconContainer.classList.add('visible');
         } else {
-          iconContainer.classList.remove('visible'); // Remove a animação quando o usuário sai da div
+          iconContainer.classList.remove('visible'); 
         }
       });
     });

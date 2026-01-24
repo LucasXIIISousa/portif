@@ -1,0 +1,194 @@
+{
+  "ui": {
+    "pt": {
+      "nav_home": "Início",
+      "nav_stats": "Métricas",
+      "nav_education": "Formação",
+      "nav_xp": "Carreira",
+      "nav_projects": "Portfólio",
+      "nav_contact": "Contato",
+      "stats_title": "Competências & Métricas",
+      "stack_title": "Stack Tecnológica",
+      "education_title": "Formação Acadêmica",
+      "languages_title": "Idiomas",
+      "projects_title": "Projetos em Destaque",
+      "repos_label": "Repositórios",
+      "xp_label": "Anos",
+      "commits_label": "Commits",
+      "clients_label": "Clientes",
+      "lang_btn": "EN",
+      "cta_btn": "Solicitar Orçamento"
+    },
+    "en": {
+      "nav_home": "Home",
+      "nav_stats": "Metrics",
+      "nav_education": "Education",
+      "nav_xp": "Career",
+      "nav_projects": "Portfolio",
+      "nav_contact": "Contact",
+      "stats_title": "Skills & Metrics",
+      "stack_title": "Tech Stack",
+      "education_title": "Education",
+      "languages_title": "Languages",
+      "projects_title": "Featured Projects",
+      "repos_label": "Repositories",
+      "xp_label": "Years",
+      "commits_label": "Commits",
+      "clients_label": "Clients",
+      "lang_btn": "PT",
+      "cta_btn": "Get a Quote"
+    }
+  },
+  "profiles": {
+    "dev": {
+      "id": "dev",
+      "themeColor": "#00f2ff",
+      "stats": {
+        "clients": "5+",
+        "xp_years": "2",
+        "commits_fallback": " ",
+        "mainStack": ["NestJS", "Spring", "Go", "React", "Docker", "Python", "Flutter", "PostgreSQL"]
+      },
+      "pt": {
+        "brandName": "LucasDev.",
+        "role": "Engenheiro de Software Full Stack",
+        "heroTitle": "Backend Robusto & Arquitetura de Dados",
+        "heroSubtitle": "Especialista em APIs REST, Microsserviços e integração de sistemas com foco em qualidade e segurança.",
+        "education": [
+          { "school": "FATEC", "course": "Tecnólogo em Análise e Desenvolvimento de Sistemas", "date": "2022 - 2025" },
+          { "school": "Senac", "course": "Técnico em Tecnologia da Informação", "date": "2017 - 2018" }
+        ],
+        "languages": ["Português (Fluente)", "Inglês (Intermediário)"],
+        "resume": [
+          { "role": "Desenvolvedor Full Stack", "company": "Whodo (SaaS)", "date": "2025", "desc": "Evolução de módulos backend (Go) e frontend (React). Implementação de autenticação, testes de rotas e definição de arquitetura." },
+          { "role": "Desenvolvedor de Dados & IA", "company": "Compass UOL", "date": "2024 - 2025", "desc": "Desenvolvimento de pipelines ETL com Python e AWS. Criação de modelos preditivos e dashboards para insights estratégicos." },
+          { "role": "Desenvolvedor Web Full Stack", "company": "Projetos Corporativos", "date": "2024 - 2025", "desc": "Desenvolvimento PHP/WordPress, gestão de servidores Apache e otimização de performance e segurança web." }
+        ],
+        "projects": [
+          {
+            "title": "Análise de Dados Socioculturais (Cinema)",
+            "desc": "Pipeline de Big Data para análise de tendências cinematográficas. Processamento distribuído com PySpark, containerização Docker e visualização em Power BI.",
+            "images": ["/img/proj-cinema-1.png", "/img/proj-cinema-2.png", "/img/proj-cinema-3.png"],
+            "stack": ["Python", "AWS", "Docker", "PySpark"]
+          },
+          {
+            "title": "Sistema de Gestão de Locadora (CRUD)",
+            "desc": "Backend robusto para gestão de filmes e usuários. Inclui categorização avançada, cálculo financeiro automatizado e persistência relacional.",
+            "images": ["/img/proj-crud-1.png", "/img/proj-crud-2.png", "/img/proj-crud-3.png"],
+            "stack": ["Java", "Spring Boot", "PostgreSQL", "API REST"]
+          },
+          {
+            "title": "App Educacional Mobile",
+            "desc": "Aplicativo mobile para gestão de rotinas de estudo. Focado em UX responsiva e arquitetura de dados em tempo real.",
+            "images": ["/img/proj-mobile-1.png", "/img/proj-mobile-2.png", "/img/proj-mobile-3.png"],
+            "stack": ["Flutter", "Firebase", "PostgreSQL", "Dart"]
+          }
+        ]
+      },
+      "en": {
+        "brandName": "LucasDev.",
+        "role": "Full Stack Software Engineer",
+        "heroTitle": "Robust Backend & Data Architecture",
+        "heroSubtitle": "Specialist in REST APIs, Microservices, and system integration focusing on quality and security.",
+        "education": [
+          { "school": "FATEC", "course": "Technologist in Systems Analysis and Development", "date": "2022 - 2025" },
+          { "school": "Senac", "course": "IT Technician", "date": "2017 - 2018" }
+        ],
+        "languages": ["Portuguese (Fluent)", "English (Intermediate)"],
+        "resume": [
+          { "role": "Full Stack Developer", "company": "Whodo (SaaS)", "date": "2025", "desc": "Evolution of backend (Go) and frontend (React) modules. Implementation of auth, route testing, and architecture definition." },
+          { "role": "Data & AI Developer", "company": "Compass UOL", "date": "2024 - 2025", "desc": "Development of ETL pipelines with Python and AWS. Creation of predictive models and dashboards for strategic insights." },
+          { "role": "Full Stack Web Developer", "company": "Corporate Projects", "date": "2024 - 2025", "desc": "PHP/WordPress development, Apache server management, and web performance/security optimization." }
+        ],
+        "projects": [
+          {
+            "title": "Sociocultural Data Analysis (Cinema)",
+            "desc": "Big Data pipeline for cinematic trend analysis. Distributed processing with PySpark, Docker containerization, and Power BI visualization.",
+            "images": ["/img/proj-cinema-1.png", "/img/proj-cinema-2.png", "/img/proj-cinema-3.png"],
+            "stack": ["Python", "AWS", "Docker", "PySpark"]
+          },
+          {
+            "title": "Rental Management System (CRUD)",
+            "desc": "Robust backend for movie and user management. Includes advanced categorization, automated financial calculation, and relational persistence.",
+            "images": ["/img/proj-crud-1.png", "/img/proj-crud-2.png", "/img/proj-crud-3.png"],
+            "stack": ["Java", "Spring Boot", "PostgreSQL", "REST API"]
+          },
+          {
+            "title": "Educational Mobile App",
+            "desc": "Mobile application for study routine management. Focused on responsive UX and real-time data architecture.",
+            "images": ["/img/proj-mobile-1.png", "/img/proj-mobile-2.png", "/img/proj-mobile-3.png"],
+            "stack": ["Flutter", "Firebase", "PostgreSQL", "Dart"]
+          }
+        ]
+      }
+    },
+    "game": {
+        "id": "game",
+        "themeColor": "#ff0055",
+        "stats": {
+          "clients": "5+",
+          "xp_years": "2+",
+          "commits_fallback": " ",
+          "mainStack": ["Unity", "Csharp", "Blender", "Unreal"]
+        },
+        "pt": {
+             "brandName": "LucasDevGame.",
+             "role": "Engenheiro de Jogos e Simulação",
+             "heroTitle": "Sistemas Interativos & Física",
+             "heroSubtitle": "Engenharia de software aplicada a engines de jogos, física computacional e otimização de renderização.",
+             "education": [],
+             "languages": [],
+             "resume": [
+                { "role": "Engenheiro de Gameplay", "company": "RPG Life Project", "date": "2025", "desc": "Implementação de sistemas de persistência de dados e lógica de servidor para ambientes massivos." }
+             ],
+             "projects": []
+        },
+        "en": {
+             "brandName": "LucasDevGame.",
+             "role": "Game & Simulation Engineer",
+             "heroTitle": "Interactive Systems & Physics",
+             "heroSubtitle": "Software engineering applied to game engines, computational physics, and real-time rendering optimization.",
+             "education": [],
+             "languages": [],
+             "resume": [
+                { "role": "Gameplay Engineer", "company": "RPG Life Project", "date": "2025", "desc": "Implementation of data persistence systems and server logic for massive environments." }
+             ],
+             "projects": []
+        }
+    },
+    "art3d": {
+        "id": "art3d",
+        "themeColor": "#ff9900",
+        "stats": {
+          "clients": "5+",
+          "xp_years": "2+",
+          "commits_fallback": "N/A",
+          "mainStack": ["Blender", "Maya", "Threejs", "WebGL"]
+        },
+        "pt": {
+             "brandName": "LucasDev3D.",
+             "role": "Technical Artist (3D)",
+             "heroTitle": "Computação Gráfica & Modelagem",
+             "heroSubtitle": "Desenvolvimento de assets otimizados e pipelines de renderização para aplicações web e interativas.",
+             "education": [],
+             "languages": [],
+             "resume": [
+                { "role": "Technical Modeler", "company": "Freelance", "date": "2024", "desc": "Modelagem Hard Surface e otimização de malha (Retopologia) para integração em engines." }
+             ],
+             "projects": []
+        },
+        "en": {
+             "brandName": "LucasDev3D.",
+             "role": "Technical Artist (3D)",
+             "heroTitle": "Computer Graphics & Modeling",
+             "heroSubtitle": "Development of optimized assets and rendering pipelines for web and interactive applications.",
+             "education": [],
+             "languages": [],
+             "resume": [
+                { "role": "Technical Modeler", "company": "Freelance", "date": "2024", "desc": "Hard Surface modeling and mesh optimization (Retopology) for engine integration." }
+             ],
+             "projects": []
+        }
+    }
+  }
+}

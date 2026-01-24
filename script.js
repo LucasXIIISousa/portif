@@ -1,232 +1,337 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleButton = document.getElementById("toggleLang");
-
-    toggleButton.addEventListener("click", function () {
-        const isEnglish = toggleButton.textContent === "Switch to English";
-
-        toggleButton.textContent = isEnglish ? "Mudar para Português" : "Switch to English";
-
-        document.getElementById("name").textContent = isEnglish ? "Lucas Sousa" : "Lucas Sousa";
-        document.getElementById("occupation").textContent = isEnglish ? "Developer and Systems Analyst" : "Desenvolvedor e Analista de Sistemas";
-        document.getElementById("sobreTitle").textContent = isEnglish ? "About Me" : "Sobre Mim";
-        document.getElementById("sobreContent").textContent = isEnglish
-            ? "Developer and systems analyst with experience in software development..."
-            : "Desenvolvedor e analista de sistemas com experiência em desenvolvimento de software...";
-        document.getElementById("city").innerHTML = isEnglish ? "<strong>City:</strong> Franca - SP" : "<strong>Cidade:</strong> Franca - SP";
-        document.getElementById("formacaoTitle").textContent = isEnglish ? "Education" : "Formação";
-        document.getElementById("formacaoItem1").innerHTML = isEnglish
-            ? "<strong>Senac, Franca — Technical (2017-2018)</strong>: Technical course in IT."
-            : "<strong>Senac, Franca — Técnico (2017-2018)</strong>: Curso técnico de TI.";
-        document.getElementById("formacaoItem2").innerHTML = isEnglish
-            ? "<strong>FATEC — Technologist (2022-2025)</strong>: Studying Systems Analysis and Development."
-            : "<strong>FATEC — Tecnólogo (2022-2025)</strong>: Cursando Análise e Desenvolvimento de Sistemas.";
-        document.getElementById("formacaoItem3").innerHTML = isEnglish
-            ? "<strong>Udemy — JAVA Course (2023-2024)</strong>: Learning Java from basic to advanced."
-            : "<strong>Udemy — Curso JAVA (2023-2024)</strong>: Aprendizado de Java do básico ao avançado.";
-    });
-
-    const nameElement = document.querySelector(".name");
-    const fullName = "Lucas Sousa";  
-    let index = 0;
-
-    // Cria o cursor piscante
-    const cursor = document.createElement("span");
-    cursor.classList.add("cursor");
-    cursor.textContent = "|";
-    nameElement.appendChild(cursor); 
-
-    function typeEffect() {
-        if (index < fullName.length) {
-            nameElement.firstChild.textContent = fullName.slice(0, index + 1);
-            index++;
-            setTimeout(typeEffect, 400);
-        } else {
-            cursor.style.display = "none";
-        }
+const state = {
+    profile: null,
+    lang: 'pt',
+    devMode: 'dark',
+    data: null,
+    // Armazena dados reais do GitHub para não perder na troca de idioma
+    githubStats: {
+        repos: null,
+        commits: null,
+        years: null
     }
+};
 
-    document.querySelector(".profile-image").addEventListener("mouseenter", function() {
-        nameElement.firstChild.textContent = "";
-        index = 0;
-        cursor.style.display = "inline-block"; 
-        setTimeout(typeEffect, 500);
-    });
-
-    window.addEventListener('scroll', function() {
-        const sections = document.querySelectorAll('.fade-section');
-        const scrollPos = window.innerHeight + window.scrollY;
-
-        sections.forEach(section => {
-            const sectionPos = section.offsetTop;
-            if (scrollPos > sectionPos + 100) {
-                section.classList.add('fade-in');
-            }
-        });
-    });
-});
-
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-function scrollTimeline() {
-    const timelines = document.querySelectorAll('.timeline');
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    timelines.forEach((timeline) => {
-        const line = timeline.querySelector('.line');
-        const timelineOffset = timeline.offsetTop;
-
-        if (scrollTop + windowHeight >= timelineOffset) {
-            const newHeight = Math.min(200, (scrollTop + windowHeight - timelineOffset) / 2); 
-            line.style.height = newHeight + 'px';
-        }
-    });
-}
-
-// Evento de scroll
-window.addEventListener('scroll', scrollTimeline);
-
-document.addEventListener('DOMContentLoaded', scrollTimeline);
-
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-
-// Função para ativar a animação de entrada lateral das seções
-function animateSections() {
-    const sections = document.querySelectorAll('.section-content');
-    
-    sections.forEach(section => {
-        if (isElementInViewport(section)) {
-            section.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', animateSections);
-
-document.addEventListener('DOMContentLoaded', animateSections);
-
-// Função para verificar se o elemento está visível na viewport
-function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top < window.innerHeight && rect.bottom >= 0
-    );
-}
-
-// Função para ativar/desativar a animação das seções com base no scroll
-function toggleSectionVisibility() {
-    const sections = document.querySelectorAll('.section-content');
-    
-    sections.forEach(section => {
-        if (isElementInViewport(section)) {
-            section.classList.add('active');  
-        } else {
-            section.classList.remove('active');  
-        }
-    });
-}
-
-window.addEventListener('scroll', toggleSectionVisibility);
-
-document.addEventListener('DOMContentLoaded', toggleSectionVisibility);
+const iconMap = {
+    "NestJS": "devicon-nestjs-plain", "Spring": "devicon-spring-plain",
+    "Go": "devicon-go-original-wordmark", "Java": "devicon-java-plain",
+    "Python": "devicon-python-plain", "Csharp": "devicon-csharp-plain",
+    "React": "devicon-react-original", "Next.js": "devicon-nextjs-plain",
+    "TypeScript": "devicon-typescript-plain", "Docker": "devicon-docker-plain",
+    "PostgreSQL": "devicon-postgresql-plain", "AWS": "devicon-amazonwebservices-plain-wordmark",
+    "Unity": "devicon-unity-original", "Unreal": "devicon-unrealengine-original",
+    "Blender": "devicon-blender-original", "Maya": "devicon-maya-plain",
+    "Threejs": "devicon-threejs-original", "Photoshop": "devicon-photoshop-plain"
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-    const timelineContainer = document.querySelector('.timeline-container');
-    setTimeout(() => {
-        timelineContainer.classList.add('visible');
-    }, 500);
-});
+    
+    checkUrlParams();
 
-
-document.addEventListener("scroll", function () {
-    const sections = document.querySelectorAll(".section-content");
-    const timelines = document.querySelectorAll(".timeline");
-    const years = document.querySelectorAll(".year");
-    const windowHeight = window.innerHeight;
-
-    // Animação para as seções
-    sections.forEach(function (section) {
-        const sectionTop = section.getBoundingClientRect().top;
-        
-        if (sectionTop < windowHeight - 100) {
-            section.classList.add("active");
-        } else {
-            section.classList.remove("active");
-        }
-    });
-
-    // Animação para a timeline
-    timelines.forEach(function (timeline) {
-        const timelineTop = timeline.getBoundingClientRect().top;
-
-        if (timelineTop < windowHeight - 100) {
-            timeline.classList.add("active");
-        } else {
-            timeline.classList.remove("active");
-        }
-    });
-
-    // Animação para o ano da timeline
-    years.forEach(function (year) {
-        const yearTop = year.getBoundingClientRect().top;
-
-        if (yearTop < windowHeight - 100) {
-            year.classList.add("active");
-        } else {
-            year.classList.remove("active");
-        }
-    });
-});
-
-
-document.addEventListener("scroll", function () {
-    const projects = document.querySelectorAll(".projeto");
-    const windowHeight = window.innerHeight;
-    const container = document.querySelector('.projects-container');
-    const containerTop = container.getBoundingClientRect().top;
-    const containerBottom = container.getBoundingClientRect().bottom;
-
-    // Verifica se o container está visível
-    if (containerTop < windowHeight - 100 && containerBottom > 100) {
-        projects.forEach(function (project) {
-            project.classList.add("active");
+    const profileButtons = document.querySelectorAll('[data-profile]');
+    profileButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const profileId = btn.getAttribute('data-profile');
+            initProfile(profileId);
         });
-    } else {
-        projects.forEach(function (project) {
-            project.classList.remove("active");
+    });
+
+    const langBtn = document.getElementById('lang-toggle');
+    if(langBtn) {
+        langBtn.addEventListener('click', () => {
+            state.lang = state.lang === 'pt' ? 'en' : 'pt';
+            if(state.data) renderAll();
+        });
+    }
+
+    const themeBtn = document.getElementById('theme-toggle');
+    if(themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            state.devMode = state.devMode === 'dark' ? 'light' : 'dark';
+            handleDevThemeLogic();
+        });
+    }
+
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const sidebar = document.getElementById('sidebar');
+    if(mobileToggle && sidebar) {
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const iconContainer = document.querySelector('.icon-container');
-  
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          iconContainer.classList.add('visible');
-        } else {
-          iconContainer.classList.remove('visible'); 
+function checkUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const profileParam = urlParams.get('profile');
+
+    if (profileParam && ['dev', 'game', 'art3d'].includes(profileParam)) {
+        initProfile(profileParam);
+    }
+}
+
+async function initProfile(profileId) {
+    try {
+        const response = await fetch('themes.json');
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        state.data = await response.json();
+        state.profile = profileId;
+        state.devMode = 'dark';
+
+        // Tenta buscar dados do GitHub apenas uma vez na inicialização
+        if(!state.githubStats.commits) {
+            fetchGitHubRepos('LucasXIIISousa');
+            fetchGitHubCommits('LucasXIIISousa');
         }
-      });
+
+        renderAll();
+
+        const overlay = document.getElementById('intro-overlay');
+        overlay.classList.add('fade-out');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            document.getElementById('main-layout').classList.remove('hidden');
+            
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        }, 500);
+
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro ao carregar 'themes.json'.");
+    }
+}
+
+function renderAll() {
+    if (!state.data) return;
+
+    const profileData = state.data.profiles[state.profile];
+    const uiData = state.data.ui[state.lang];
+    const contentData = profileData[state.lang];
+
+    document.documentElement.style.setProperty('--primary', profileData.themeColor);
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (uiData[key]) el.textContent = uiData[key];
     });
-  
-    observer.observe(iconContainer);
-  });
-  
+
+    document.getElementById('lang-toggle').textContent = uiData.lang_btn;
+
+    document.getElementById('brand-text').textContent = contentData.brandName;
+    document.getElementById('hero-role').textContent = contentData.role;
+    document.getElementById('hero-title').textContent = contentData.heroTitle;
+    document.getElementById('hero-subtitle').textContent = contentData.heroSubtitle;
+
+    // --- RENDERIZAÇÃO DE STATS ---
+    // Clientes (Fixo do JSON)
+    document.getElementById('stat-clients').textContent = profileData.stats.clients;
+    
+    // Anos (Prioriza API, senão usa fallback do JSON)
+    document.getElementById('stat-years').textContent = state.githubStats.years || profileData.stats.xp_years;
+    
+    // Repos (Prioriza API, sem fallback no JSON atual, usa '--')
+    if(state.githubStats.repos) {
+        document.getElementById('stat-repos').textContent = state.githubStats.repos;
+    }
+
+    // Commits (Prioriza API, senão usa fallback do JSON)
+    document.getElementById('stat-commits').textContent = state.githubStats.commits || profileData.stats.commits_fallback;
+
+
+    const stackContainer = document.getElementById('stack-container');
+    stackContainer.innerHTML = '';
+    profileData.stats.mainStack.forEach(tech => {
+        const iconClass = iconMap[tech] || "fas fa-code";
+        const badge = document.createElement('div');
+        badge.className = 'tech-badge';
+        badge.innerHTML = `<i class="${iconClass}" style="color: ${profileData.themeColor}"></i> <span>${tech}</span>`;
+        stackContainer.appendChild(badge);
+    });
+
+    const eduContainer = document.getElementById('education-container');
+    eduContainer.innerHTML = '';
+    if(contentData.education) {
+        contentData.education.forEach(edu => {
+            eduContainer.innerHTML += `
+                <div class="edu-card">
+                    <h4>${edu.school}</h4>
+                    <span>${edu.course}</span>
+                    <p>${edu.date}</p>
+                </div>`;
+        });
+    }
+
+    const resumeContainer = document.getElementById('resume-container');
+    resumeContainer.innerHTML = '';
+    contentData.resume.forEach(job => {
+        const card = document.createElement('div');
+        card.className = 'resume-card';
+        card.innerHTML = `
+            <h4>${job.role}</h4>
+            <span style="color: ${profileData.themeColor}">${job.company} | ${job.date}</span>
+            <p>${job.desc}</p>
+        `;
+        resumeContainer.appendChild(card);
+    });
+
+    const langContainer = document.getElementById('languages-container');
+    langContainer.innerHTML = '';
+    if(contentData.languages) {
+        contentData.languages.forEach(lang => {
+            langContainer.innerHTML += `<div class="lang-card">${lang}</div>`;
+        });
+    }
+
+    renderProjects(contentData.projects, profileData.themeColor);
+    handleDevThemeLogic();
+}
+
+function renderProjects(projects, color) {
+    const container = document.getElementById('projects-container');
+    container.innerHTML = '';
+    
+    if(!projects) return;
+
+    projects.forEach(proj => {
+        let imagesHtml = '';
+        if(proj.images) {
+            proj.images.forEach(img => {
+                imagesHtml += `
+                    <div class="project-img-slot">
+                        ${img.includes('/') ? `<img src="${img}" alt="Project">` : '<i class="fas fa-image"></i>'}
+                    </div>`;
+            });
+        }
+
+        let stackHtml = '';
+        if(proj.stack) {
+            proj.stack.forEach(tech => {
+                const iconClass = iconMap[tech] || "fas fa-code";
+                stackHtml += `
+                    <div class="tech-badge">
+                        <i class="${iconClass}" style="color: ${color}"></i> <span>${tech}</span>
+                    </div>`;
+            });
+        }
+
+        container.innerHTML += `
+            <div class="project-block">
+                <div class="project-header">
+                    <h3>${proj.title}</h3>
+                    <p>${proj.desc}</p>
+                </div>
+                <div class="project-gallery">
+                    ${imagesHtml}
+                </div>
+                <div class="project-stack">
+                    ${stackHtml}
+                </div>
+            </div>`;
+    });
+}
+
+function handleDevThemeLogic() {
+    const themeBtn = document.getElementById('theme-toggle');
+    const iframe = document.getElementById('anim-frame');
+    const body = document.body;
+
+    if (state.profile !== 'dev') {
+        themeBtn.classList.add('hidden');
+        body.classList.remove('light-mode');
+        
+        iframe.classList.remove('hidden');
+        
+        if(state.profile === 'game') {
+             if(!iframe.src.includes("animations/Star.html")) iframe.src = "animations/Star.html";
+        }
+        if(state.profile === 'art3d') {
+            if(!iframe.src.includes("animations/wing.html")) iframe.src = "animations/wing.html";
+       }
+       return;
+    }
+
+    themeBtn.classList.remove('hidden');
+    
+    if (state.devMode === 'light') {
+        body.classList.add('light-mode');
+        themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        iframe.classList.remove('hidden');
+        if(!iframe.src.includes("animations/wing.html")) iframe.src = "animations/wing.html";
+
+    } else {
+        body.classList.remove('light-mode');
+        themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        
+        iframe.classList.remove('hidden');
+        if(!iframe.src.includes("animations/Star.html")) iframe.src = "animations/Star.html";
+    }
+}
+
+async function fetchGitHubRepos(username) {
+    const reposEl = document.getElementById('stat-repos');
+    try {
+        const res = await fetch(`https://api.github.com/users/${username}`);
+        if(res.ok) {
+            const data = await res.json();
+            
+            if (data.public_repos) {
+                const val = data.public_repos + "+";
+                state.githubStats.repos = val; // SALVA NO ESTADO
+                reposEl.textContent = val;
+                
+                // Calcula anos
+                const created = new Date(data.created_at);
+                const now = new Date();
+                const diffYears = (Math.abs(now - created) / (1000 * 60 * 60 * 24 * 365)).toFixed(1) + "+";
+                state.githubStats.years = diffYears; // SALVA NO ESTADO
+                document.getElementById('stat-years').textContent = diffYears;
+            }
+        }
+    } catch (e) {
+        console.log("GitHub API (Repos) Falhou:", e);
+    }
+}
+
+async function fetchGitHubCommits(username) {
+    const commitsEl = document.getElementById('stat-commits');
+    
+    try {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
+        
+        if(res.ok) {
+            const data = await res.json();
+            
+            let totalCommits = 0;
+
+            const years = Object.keys(data.total);
+            years.forEach(year => {
+                totalCommits += data.total[year];
+            });
+
+            if (totalCommits > 0) {
+                let displayVal = totalCommits;
+                if(totalCommits > 1000) {
+                     displayVal = (totalCommits / 1000).toFixed(1) + "k+";
+                }
+                
+                state.githubStats.commits = displayVal; 
+                commitsEl.textContent = displayVal;
+            }
+        }
+    } catch (e) {
+        console.log("API de Commits falhou.", e);
+    }
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Death Star Wireframe</title>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <style>
+    html {
+      background-color: transparent;
+      overflow: hidden;
+    }
+
+    .wrapper {
+      margin: 50px auto;
+      perspective: 800px;
+      perspective-origin: 50% 150px;
+      width: 200px;
+    }
+
+    .sphere {
+      position: relative;
+      margin: 0 auto;
+      width: 200px;
+      height: 200px;
+      transform-style: preserve-3d;
+      animation: spin 60s infinite linear;
+    }
+
+    /* Estilo base para anéis verticais e horizontais */
+    .sphere > div:not(.superlaser-dish) {
+      border-color: #fff;
+      border-style: solid;
+      border-radius: 50%;
+      opacity: .8;
+      position: absolute;
+    }
+
+    /* --- Linhas Verticais (Geradas por JS) --- */
+    .vertical-line {
+      width: 200px;
+      height: 200px;
+      top: 0;
+      left: 0;
+      border-width: 2px;
+    }
+
+    /* --- Linhas Horizontais (Matematicamente Corretas) --- */
+    
+    .horizontal-line {
+      transform-style: preserve-3d;
+    }
+
+    /* *** A MUDANÇA ESTÁ AQUI ***
+       Criei duas linhas (superior e inferior) para formar o cinturão.
+       Elas têm 2px de borda (como as verticais) e são sólidas.
+    */
+    .h-line-center-belt {
+      border-width: 2px;
+      border-style: solid; /* Garante que não sejam pontilhadas */
+      width: 200px;
+      height: 200px;
+      top: 0;
+      left: 0;
+    }
+    .h-line-center-belt.upper {
+      /* Move 3px para cima (no eixo Y) antes de rotacionar */
+      transform: translateY(-3px) rotateX(90deg);
+    }
+    .h-line-center-belt.lower {
+      /* Move 3px para baixo (no eixo Y) antes de rotacionar */
+      transform: translateY(3px) rotateX(90deg);
+    }
+
+    
+    /* Estilo para linhas pontilhadas */
+    .dotted-style {
+      border-width: 2px;
+      border-style: dotted;
+    }
+
+    /* --- Cálculos (Base: Raio da Esfera = 100px) --- */
+    
+    /* Linha 40% (y = 40px) */
+    .h-line-40 {
+      width: 183.3px;
+      height: 183.3px;
+      top: 8.35px;
+      left: 8.35px;
+    }
+    .h-line-40.upper {
+      transform: translateY(-40px) rotateX(90deg);
+    }
+    .h-line-40.lower {
+      transform: translateY(40px) rotateX(90deg);
+    }
+
+    /* Linha 60% (y = 60px) */
+    .h-line-60 {
+      width: 160px;
+      height: 160px;
+      top: 20px;
+      left: 20px;
+    }
+    .h-line-60.upper {
+      transform: translateY(-60px) rotateX(90deg);
+    }
+    .h-line-60.lower {
+      transform: translateY(60px) rotateX(90deg);
+    }
+
+    /* Linha 90% (y = 90px) */
+    .h-line-90 {
+      width: 87.17px;
+      height: 87.17px;
+      top: 56.41px;
+      left: 56.41px;
+    }
+    .h-line-90.upper {
+      transform: translateY(-90px) rotateX(90deg);
+    }
+    .h-line-90.lower {
+      transform: translateY(90px) rotateX(90deg);
+    }
+
+
+    /* --- Arma (Superlaser) --- */
+    .superlaser-dish {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: solid 2px #fff;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      top: 70px; 
+      left: 70px; 
+      transform: rotateX(25deg) rotateY(30deg) translateZ(98px);
+      transform-style: preserve-3d;
+    }
+
+    .dish-inner-ring {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: solid 1px #fff;
+      border-radius: 50%;
+      top: 24px; 
+      left: 24px; 
+    }
+
+    .dish-spoke {
+      position: absolute;
+      width: 1px;
+      height: 25px; 
+      background: #fff;
+      top: 5px;  
+      left: 29.5px; 
+      transform-origin: 50% 100%;
+    }
+
+
+    /* --- Animação --- */
+    @keyframes spin {
+      0% {
+        transform: rotateX(15deg) rotateY(0) rotateZ(15deg);
+      }
+      50% {
+        transform: rotateX(-15deg) rotateY(180deg) rotateZ(-15deg);
+      }
+      100% {
+        transform: rotateX(15deg) rotateY(360deg) rotateZ(15deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="sphere">
+    
+    <div class="horizontal-line h-line-center-belt upper"></div>
+    <div class="horizontal-line h-line-center-belt lower"></div>
+
+    <div class="horizontal-line h-line-40 upper dotted-style"></div>
+    <div class="horizontal-line h-line-60 upper dotted-style"></div>
+    <div class="horizontal-line h-line-90 upper dotted-style"></div>
+
+    <div class="horizontal-line h-line-40 lower dotted-style"></div>
+    <div class="horizontal-line h-line-60 lower dotted-style"></div>
+    <div class="horizontal-line h-line-90 lower dotted-style"></div>
+    
+    <div class="superlaser-dish">
+      <div class="dish-inner-ring"></div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  
+  // --- 1. GERAR LINHAS VERTICAIS DA ESFERA ---
+  var slices = 9; 
+  var angle = 360 / slices;
+  
+  for (var i = 0; i < slices; i++) {
+    var slice = $('<div class="vertical-line"></div>'); 
+    slice.css('transform', 'rotateY(' + (angle * i) + 'deg)');
+    $('.sphere').append(slice);
+  }
+
+  // --- 2. GERAR RAIAS (SPOKES) DA ARMA ---
+  var spokes = 16; 
+  var spokeAngle = 360 / spokes;
+
+  for (var i = 0; i < spokes; i++) {
+    var spoke = $('<div class="dish-spoke"></div>');
+    spoke.css('transform', 'rotate(' + (spokeAngle * i) + 'deg)');
+    $('.superlaser-dish').append(spoke);
+  }
+
+});
+</script>
+
+</body>
+</html>

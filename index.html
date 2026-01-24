@@ -1,165 +1,136 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio Lucas Sousa</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Lucas Sousa - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 </head>
 <body>
 
-    <header>
-        <button id="toggleLang">Switch to English</button>
-    </header>
-
-    <div class="banner">
-        <div class="banner-content">
-          <img src="./imgProject/profile-pic.png" alt="Minha Imagem" class="profile-image">
-          <div class="info-content">
-            <h2 class="name">Lucas Sousa</h2>
-            <p class="resume">Desenvolvedor e analista de sistemas com experiência em desenvolvimento de software, análise de dados e manutenção de redes, atualmente cursando Análise e Desenvolvimento de Sistemas.</p>
-            <a href="seu-curriculo.pdf" class="download-btn">Baixar Currículo</a>
-          </div>
+    <div id="intro-overlay" class="intro-overlay">
+        <h1 class="intro-title">Choose your Character</h1>
+        <div class="profile-selector">
+            <button class="select-btn dev-btn" data-profile="dev">
+                <i class="fas fa-code"></i> Developer
+            </button>
+            <button class="select-btn game-btn" data-profile="game">
+                <i class="fas fa-gamepad"></i> Game Dev
+            </button>
+            <button class="select-btn art-btn" data-profile="art3d">
+                <i class="fas fa-cube"></i> 3D Artist
+            </button>
         </div>
-      </div>
-      
-      <div class="timeline-container">
-        <!-- Timeline e Seção 1 -->
-        <div class="timeline-section">
-            <div class="timeline">
-                <div class="year">Tecnólogo</div>
-                <div class="point"></div>
-                <div class="line"></div>
+    </div>
+
+    <div class="top-controls">
+        <button id="theme-toggle" class="control-btn hidden">
+            <i class="fas fa-sun"></i>
+        </button>
+        <button id="lang-toggle" class="control-btn">
+            EN
+        </button>
+    </div>
+
+    <button id="mobile-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="layout hidden" id="main-layout">
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="img-container">
+                    <img src="imgProject/profile-pic.png" alt="Lucas Sousa" class="sidebar-profile-img">
+                </div>
+                <div class="brand">
+                    <span id="brand-text">LucasDev.</span>
+                </div>
             </div>
-            <div class="section-content" id="section1">
-                <h2>FATEC</h2>
-                <p>Centro Paula Souza</p>
-                <p>Cursando Analise e Desenvolvimento de Sistemas.</p>
+
+            <nav>
+                <a href="#hero" class="active"><i class="fas fa-home"></i> <span data-i18n="nav_home">Home</span></a>
+                <a href="#bento"><i class="fas fa-chart-pie"></i> <span data-i18n="nav_stats">Stats</span></a>
+                <a href="#education"><i class="fas fa-graduation-cap"></i> <span data-i18n="nav_education">Formação</span></a>
+                <a href="#resume"><i class="fas fa-briefcase"></i> <span data-i18n="nav_xp">XP</span></a>
+                <a href="#projects"><i class="fas fa-project-diagram"></i> <span data-i18n="nav_projects">Projetos</span></a>
+            </nav>
+            
+            <div class="socials">
+                <a href="https://github.com/LucasXIIISousa" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/lucasxiiisousa" target="_blank"><i class="fab fa-linkedin"></i></a>
             </div>
-        </div>
-    
-        <!-- Timeline e Seção 2 -->
-        <div class="timeline-section">
-            <div class="timeline">
-                <div class="year">Técnico</div>
-                <div class="point"></div>
-                <div class="line"></div>
-            </div>
-            <div class="section-content" id="section2">
-                <h2>Senac</h2>
-                <p>Curso técnico de TI - Tecnologia da informação. montar e fazer a manutenção de microcomputadores, instalar e configurar redes e desenvolver sistemas e websites.</p>
-            </div>
-        </div>
+        </aside>
 
+        <main class="content">
+            <section id="hero" class="hero-section">
+                <div class="hero-text">
+                    <span class="role-badge" id="hero-role">Loading...</span>
+                    <h1 id="hero-title">...</h1>
+                    <p id="hero-subtitle">...</p>
+                    <a href="#contact" class="cta-button" data-i18n="cta_btn">Contato</a>
+                </div>
 
-        <div class="timeline-section">
-          <div class="timeline">
-              <div class="year">Cursos</div>
-              <div class="point"></div>
-              <div class="line"></div>
-          </div>
-          <div class="section-content" id="section1">
-              <h3>- JAVA</h3>
-              <h3>- PYTHON</h3>
-              <h3>- MACHINE LEARNING</h3>
-              <h3>- SISTEMAS DE SEGURANÇA</h3>
-              <h3>- CRIAÇÂO E MANUTENÇÂO DE THEMA WP</h3>
-              <h3>- COMPASS OUL ANALISTA DE DADOS</h3>
-          </div>
-      </div>
-    
-        <!-- Mais seções conforme necessário -->
-    </div>
+                <div class="hero-visual">
+                    <iframe id="anim-frame" class="anim-frame" scrolling="no"></iframe>
+                    <div class="glow-effect"></div>
+                </div>
+            </section>
 
-    <div class="projetosh2">
-      <h2 >Projetos</h2>
-    </div>
-    
+            <section id="bento" class="section-padding">
+                <h2 class="section-title" data-i18n="stats_title">Visão Geral</h2>
+                <div class="bento-grid">
+                    <div class="bento-box box-large stack-box">
+                        <h4 data-i18n="stack_title">Tech Stack</h4>
+                        <div id="stack-container" class="tech-grid"></div>
+                    </div>
+                    <div class="bento-box box-medium stat-box">
+                        <i class="fab fa-github box-icon"></i>
+                        <span id="stat-repos" class="big-number">--</span>
+                        <p data-i18n="repos_label">Repos</p>
+                    </div>
+                    <div class="bento-box box-medium stat-box">
+                        <i class="fas fa-hourglass-half box-icon"></i>
+                        <span id="stat-years" class="big-number">--</span>
+                        <p data-i18n="xp_label">Anos</p>
+                    </div>
+                    <div class="bento-box box-medium stat-box">
+                        <i class="fas fa-code-branch box-icon"></i>
+                        <span id="stat-commits" class="big-number">0</span>
+                        <p data-i18n="commits_label">Commits</p>
+                    </div>
+                    <div class="bento-box box-medium stat-box">
+                        <i class="fas fa-users box-icon"></i>
+                        <span id="stat-clients" class="big-number">0</span>
+                        <p data-i18n="clients_label">Clientes</p>
+                    </div>
+                </div>
+            </section>
 
-    <div class="projects-container">
-      <div class="projeto">
-          <img src="" alt="Projeto 1">
-          <h2>Análise de Dados Socioeconômicos</h2>
-          <p>Utilização de Python para processar dados de um formulário e criar visualizações no Power BI.</p>
-          <div class="icons">
-            <img class="fab fa-python" src="./icons/python.png" alt=""/>
-            <img class="fab fa-bi" src="./icons/power-bl.png" alt=""/>
-          </div>
-      </div>
-    
-      <div class="projeto">
-          <img src="" alt="Projeto 2">
-          <h2>Análise de Dados com AWS IA machine learning</h2>
-          <p>Utilização de Python para processar dados e captação de recursos, utilizando serviços da AWS para Machine Learning com o objetivo de construir previsões dos dados. Além disso, uso de bibliotecas para exibir os resultados em uma página web.</p>
-          <div class="icons">
-            <img class="fab fa-aws" src="./icons/aws.png" alt=""/>
-            <img class="fab fa-python" src="./icons/python.png" alt=""/>
-          </div>
-      </div>
+            <section id="education" class="section-padding">
+                <h2 class="section-title" data-i18n="education_title">Formação</h2>
+                <div id="education-container" class="list-grid"></div>
+            </section>
 
-      <div class="projeto">
-        <img src="" alt="Projeto 3">
-        <h2>Xadrez</h2>
-        <p>Desenvolver um jogo de xadrez em Java usando conceitos de orientação a objetos e criar classes para o tabuleiro, peças e jogadores, implementar regras de movimento, lógica de jogo (como xeque e xeque-mate).</p>
-        <div class="icons">
-          <img class="fab fa-java" src="./icons/java.png" alt=""/>
-        </div>
-      </div>
+            <section id="resume" class="section-padding">
+                <h2 class="section-title" data-i18n="nav_xp">Experiência</h2>
+                <div class="resume-scroller" id="resume-container"></div>
+            </section>
 
-      <div class="projeto">
-        <img src="" alt="Projeto 4">
-        <h2>CRUD</h2>
-        <p>Desenvolver um CRUD utilizando Java, Spring Boot e PostgreSQL para uma locadora de filmes. O projeto inclui a criação de cadastro de usuários, cadastro de filmes, criação de categorias, separação de séries e cálculo do custo mensal de cada usuário.</p>
-        <div class="icons">
-          <img class="fab fa-java" src="./icons/java.png" alt=""/>
-          <img class="fab fa-postgres" src="./icons/postgre.png" alt=""/>
-          <img class="fab fa-python" src="./icons/spring.png" alt=""/>
-        </div>
-      </div>
-  
-      <!-- Adicione mais projetos se necessário -->
-  </div>
+            <section id="languages" class="section-padding">
+                <h2 class="section-title" data-i18n="languages_title">Idiomas</h2>
+                <div id="languages-container" class="lang-grid"></div>
+            </section>
 
-  <div class="icon-container">
-    <div class="mini-div">
-      <img class="fab fa-python" src="./icons/python.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-bi" src="./icons/power-bl.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-js" src="./icons/js.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-node" src="./icons/node.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-php" src="./icons/php.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-wordpress" src="./icons/wordpress.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-mysql" src="./icons/mysql.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-postgres" src="./icons/postgre.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-java" src="./icons/java.png" alt=""/>
-    </div>
-    <div class="mini-div">
-      <img class="fab fa-docker" src="./icons/docker.png" alt=""/>
-    </div>
-  </div>
+            <section id="projects" class="section-padding">
+                <h2 class="section-title" data-i18n="projects_title">Projetos</h2>
+                <div id="projects-container" class="projects-list"></div>
+            </section>
 
-    <footer>
-        <p>Entre em contato:</p>
-        <p><i class="fas fa-envelope"></i> lucasdev.sousa49@gmail.com</p>
-        <p><i class="fas fa-phone"></i> +55 16 99119-9405</p>
-    </footer>
-
+        </main>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

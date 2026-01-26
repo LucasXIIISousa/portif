@@ -10,6 +10,8 @@
 </head>
 <body>
 
+    <iframe id="game-bg-frame" class="full-screen-bg hidden" scrolling="no"></iframe>
+
     <div id="intro-overlay" class="intro-overlay">
         <h1 class="intro-title">Choose your Character</h1>
         <div class="profile-selector">
@@ -51,10 +53,10 @@
             </div>
 
             <nav>
-                <a href="#hero" class="active"><i class="fas fa-home"></i> <span data-i18n="nav_home">Home</span></a>
-                <a href="#bento"><i class="fas fa-chart-pie"></i> <span data-i18n="nav_stats">Stats</span></a>
+                <a href="#hero" class="active"><i class="fas fa-home"></i> <span data-i18n="nav_home">Início</span></a>
+                <a href="#bento"><i class="fas fa-chart-pie"></i> <span data-i18n="nav_stats">Métricas</span></a>
                 <a href="#education"><i class="fas fa-graduation-cap"></i> <span data-i18n="nav_education">Formação</span></a>
-                <a href="#resume"><i class="fas fa-briefcase"></i> <span data-i18n="nav_xp">XP</span></a>
+                <a href="#resume"><i class="fas fa-briefcase"></i> <span data-i18n="nav_xp">Carreira</span></a>
                 <a href="#projects"><i class="fas fa-project-diagram"></i> <span data-i18n="nav_projects">Projetos</span></a>
             </nav>
             
@@ -73,7 +75,7 @@
                     <a href="#contact" class="cta-button" data-i18n="cta_btn">Contato</a>
                 </div>
 
-                <div class="hero-visual">
+                <div class="hero-visual" id="sidebar-visual">
                     <iframe id="anim-frame" class="anim-frame" scrolling="no"></iframe>
                     <div class="glow-effect"></div>
                 </div>
@@ -89,7 +91,7 @@
                     <div class="bento-box box-medium stat-box">
                         <i class="fab fa-github box-icon"></i>
                         <span id="stat-repos" class="big-number">--</span>
-                        <p data-i18n="repos_label">Repos</p>
+                        <p data-i18n="repos_label">Repositórios</p>
                     </div>
                     <div class="bento-box box-medium stat-box">
                         <i class="fas fa-hourglass-half box-icon"></i>
@@ -115,7 +117,7 @@
             </section>
 
             <section id="resume" class="section-padding">
-                <h2 class="section-title" data-i18n="nav_xp">Experiência</h2>
+                <h2 class="section-title" data-i18n="nav_xp">Carreira</h2>
                 <div class="resume-scroller" id="resume-container"></div>
             </section>
 

@@ -467,3 +467,45 @@ body {
     .select-btn { width: 100%; }
     .hero-visual { width: 300px; height: 300px; }
 }
+
+/* IFRAME DE BACKGROUND (GAME DEV) */
+.full-screen-bg {
+    position: fixed;
+    top: 50%;         /* Centraliza o topo */
+    left: 50%;        /* Centraliza a esquerda */
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    z-index: -1;
+    
+    /* Centralização perfeita: move de volta 50% do próprio tamanho */
+    transform: translate(-50%, -50%); 
+    
+    /* EFEITO DE DESFOQUE (BLUR) */
+    /* Isso desfoca tudo dentro do iframe (símbolo + brasas) */
+    filter: blur(4px) contrast(1.1); 
+    
+    pointer-events: none; /* Garante que cliques passem para o site */
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.full-screen-bg.hidden {
+    opacity: 0;
+    display: none;
+}
+
+/* Ajuste importante: No modo Game, o fundo do site deve ser transparente 
+   para ver o iframe atrás */
+body.game-mode-active {
+    background: transparent !important;
+}
+
+/* Para garantir que o texto seja legível sobre o fundo interativo,
+   podemos adicionar um leve backdrop nos containers se necessário. */
+body.game-mode-active .sidebar,
+body.game-mode-active .bento-box,
+body.game-mode-active .project-block {
+    background: rgba(10, 10, 10, 0.85); /* Mais opaco para leitura */
+    backdrop-filter: blur(10px);
+}

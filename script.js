@@ -3,7 +3,6 @@ const state = {
     lang: 'pt',
     devMode: 'dark',
     data: null,
-    // Armazena dados reais do GitHub para não perder na troca de idioma
     githubStats: {
         repos: null,
         commits: null,
@@ -24,13 +23,13 @@ const iconMap = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    
     checkUrlParams();
 
     const profileButtons = document.querySelectorAll('[data-profile]');
     profileButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const profileId = btn.getAttribute('data-profile');
+            window.history.pushState({}, '', `?profile=${profileId}`);
             initProfile(profileId);
         });
     });
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(themeBtn) {
         themeBtn.addEventListener('click', () => {
             state.devMode = state.devMode === 'dark' ? 'light' : 'dark';
-            handleDevThemeLogic();
+            handleVisuals(); // Atualiza apenas o visual
         });
     }
 
@@ -75,14 +74,14 @@ function checkUrlParams() {
 async function initProfile(profileId) {
     try {
         const response = await fetch('themes.json');
-        
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         state.data = await response.json();
         state.profile = profileId;
+        
+        // Reseta para o modo dark ao trocar de perfil, se quiser
         state.devMode = 'dark';
 
-        // Tenta buscar dados do GitHub apenas uma vez na inicialização
         if(!state.githubStats.commits) {
             fetchGitHubRepos('LucasXIIISousa');
             fetchGitHubCommits('LucasXIIISousa');
@@ -95,16 +94,6 @@ async function initProfile(profileId) {
         setTimeout(() => {
             overlay.classList.add('hidden');
             document.getElementById('main-layout').classList.remove('hidden');
-            
-            if (window.location.hash) {
-                const targetId = window.location.hash.substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }, 300);
-                }
-            }
         }, 500);
 
     } catch (error) {
@@ -120,8 +109,10 @@ function renderAll() {
     const uiData = state.data.ui[state.lang];
     const contentData = profileData[state.lang];
 
+    // Define a cor primária (CSS Variable)
     document.documentElement.style.setProperty('--primary', profileData.themeColor);
     
+    // Textos da UI
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (uiData[key]) el.textContent = uiData[key];
@@ -129,27 +120,22 @@ function renderAll() {
 
     document.getElementById('lang-toggle').textContent = uiData.lang_btn;
 
+    // Conteúdo do Hero
     document.getElementById('brand-text').textContent = contentData.brandName;
     document.getElementById('hero-role').textContent = contentData.role;
     document.getElementById('hero-title').textContent = contentData.heroTitle;
     document.getElementById('hero-subtitle').textContent = contentData.heroSubtitle;
 
-    // --- RENDERIZAÇÃO DE STATS ---
-    // Clientes (Fixo do JSON)
+    // Métricas
     document.getElementById('stat-clients').textContent = profileData.stats.clients;
+    document.getElementById('stat-years').textContent = profileData.stats.xp_years;
     
-    // Anos (Prioriza API, senão usa fallback do JSON)
-    document.getElementById('stat-years').textContent = state.githubStats.years || profileData.stats.xp_years;
-    
-    // Repos (Prioriza API, sem fallback no JSON atual, usa '--')
     if(state.githubStats.repos) {
         document.getElementById('stat-repos').textContent = state.githubStats.repos;
     }
-
-    // Commits (Prioriza API, senão usa fallback do JSON)
     document.getElementById('stat-commits').textContent = state.githubStats.commits || profileData.stats.commits_fallback;
 
-
+    // Stack
     const stackContainer = document.getElementById('stack-container');
     stackContainer.innerHTML = '';
     profileData.stats.mainStack.forEach(tech => {
@@ -160,6 +146,7 @@ function renderAll() {
         stackContainer.appendChild(badge);
     });
 
+    // Educação
     const eduContainer = document.getElementById('education-container');
     eduContainer.innerHTML = '';
     if(contentData.education) {
@@ -173,6 +160,7 @@ function renderAll() {
         });
     }
 
+    // Carreira
     const resumeContainer = document.getElementById('resume-container');
     resumeContainer.innerHTML = '';
     contentData.resume.forEach(job => {
@@ -186,22 +174,16 @@ function renderAll() {
         resumeContainer.appendChild(card);
     });
 
-    const langContainer = document.getElementById('languages-container');
-    langContainer.innerHTML = '';
-    if(contentData.languages) {
-        contentData.languages.forEach(lang => {
-            langContainer.innerHTML += `<div class="lang-card">${lang}</div>`;
-        });
-    }
-
+    // Projetos
     renderProjects(contentData.projects, profileData.themeColor);
-    handleDevThemeLogic();
+    
+    // Atualiza os Visuais (Iframe e Temas)
+    handleVisuals();
 }
 
 function renderProjects(projects, color) {
     const container = document.getElementById('projects-container');
     container.innerHTML = '';
-    
     if(!projects) return;
 
     projects.forEach(proj => {
@@ -214,7 +196,6 @@ function renderProjects(projects, color) {
                     </div>`;
             });
         }
-
         let stackHtml = '';
         if(proj.stack) {
             proj.stack.forEach(tech => {
@@ -225,113 +206,135 @@ function renderProjects(projects, color) {
                     </div>`;
             });
         }
-
         container.innerHTML += `
             <div class="project-block">
                 <div class="project-header">
                     <h3>${proj.title}</h3>
                     <p>${proj.desc}</p>
                 </div>
-                <div class="project-gallery">
-                    ${imagesHtml}
-                </div>
-                <div class="project-stack">
-                    ${stackHtml}
-                </div>
+                <div class="project-gallery">${imagesHtml}</div>
+                <div class="project-stack">${stackHtml}</div>
             </div>`;
     });
 }
 
-function handleDevThemeLogic() {
+// --- LÓGICA DE VISUAIS (IFRAME DE SIDEBAR vs BACKGROUND) ---
+function handleVisuals() {
     const themeBtn = document.getElementById('theme-toggle');
-    const iframe = document.getElementById('anim-frame');
+    const sidebarFrame = document.getElementById('anim-frame'); // Iframe pequeno
+    const sidebarVisualDiv = document.getElementById('sidebar-visual'); // Div pai do iframe pequeno
+    const bgFrame = document.getElementById('game-bg-frame'); // Iframe gigante
     const body = document.body;
 
-    if (state.profile !== 'dev') {
-        themeBtn.classList.add('hidden');
-        body.classList.remove('light-mode');
-        
-        iframe.classList.remove('hidden');
-        
-        if(state.profile === 'game') {
-             if(!iframe.src.includes("animations/Star.html")) iframe.src = "animations/Star.html";
+    // Função auxiliar para carregar src sem piscar
+    const loadAnim = (iframe, file) => {
+        const path = `animations/${file}`;
+        if (!iframe.src.includes(path)) {
+            iframe.src = path;
         }
-        if(state.profile === 'art3d') {
-            if(!iframe.src.includes("animations/wing.html")) iframe.src = "animations/wing.html";
-       }
-       return;
+    };
+
+    // 1. Perfil GAME: Fundo Total (Elden Ring)
+    if (state.profile === 'game') {
+        themeBtn.classList.add('hidden'); 
+        body.classList.remove('light-mode');
+        body.classList.add('game-mode-active'); // Classe CSS para deixar fundo transparente
+
+        // Esconde visual da sidebar
+        sidebarVisualDiv.classList.add('hidden');
+        
+        // Mostra e Carrega background full screen
+        bgFrame.classList.remove('hidden');
+        loadAnim(bgFrame, 'EldenRing.html');
+        return;
     }
 
-    themeBtn.classList.remove('hidden');
-    
-    if (state.devMode === 'light') {
-        body.classList.add('light-mode');
-        themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-        
-        iframe.classList.remove('hidden');
-        if(!iframe.src.includes("animations/wing.html")) iframe.src = "animations/wing.html";
+    // Se não for game, remove modo game
+    body.classList.remove('game-mode-active');
+    bgFrame.classList.add('hidden'); // Esconde BG gigante
+    bgFrame.src = ""; // Limpa src para economizar recurso
 
-    } else {
-        body.classList.remove('light-mode');
-        themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    // Mostra visual da sidebar
+    sidebarVisualDiv.classList.remove('hidden');
+
+    // 2. Perfil DEV: Sidebar (Star/Wing)
+    if (state.profile === 'dev') {
+        themeBtn.classList.remove('hidden'); 
         
-        iframe.classList.remove('hidden');
-        if(!iframe.src.includes("animations/Star.html")) iframe.src = "animations/Star.html";
+        if (state.devMode === 'light') {
+            body.classList.add('light-mode');
+            themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            loadAnim(sidebarFrame, 'wing.html');
+        } else {
+            body.classList.remove('light-mode');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            loadAnim(sidebarFrame, 'Star.html');
+        }
+        return;
+    }
+
+    // 3. Perfil ART3D: Sidebar (Wing/Outro)
+    if (state.profile === 'art3d') {
+        themeBtn.classList.add('hidden');
+        body.classList.remove('light-mode');
+        loadAnim(sidebarFrame, 'wing.html');
+        return;
     }
 }
 
+// --- GITHUB API ---
 async function fetchGitHubRepos(username) {
     const reposEl = document.getElementById('stat-repos');
     try {
         const res = await fetch(`https://api.github.com/users/${username}`);
         if(res.ok) {
             const data = await res.json();
-            
             if (data.public_repos) {
-                const val = data.public_repos + "+";
-                state.githubStats.repos = val; // SALVA NO ESTADO
-                reposEl.textContent = val;
-                
-                // Calcula anos
-                const created = new Date(data.created_at);
-                const now = new Date();
-                const diffYears = (Math.abs(now - created) / (1000 * 60 * 60 * 24 * 365)).toFixed(1) + "+";
-                state.githubStats.years = diffYears; // SALVA NO ESTADO
-                document.getElementById('stat-years').textContent = diffYears;
+                state.githubStats.repos = data.public_repos + "+";
+                reposEl.textContent = state.githubStats.repos;
             }
         }
-    } catch (e) {
-        console.log("GitHub API (Repos) Falhou:", e);
-    }
+    } catch (e) { console.log("GitHub Repos Error", e); }
 }
 
 async function fetchGitHubCommits(username) {
     const commitsEl = document.getElementById('stat-commits');
-    
     try {
         const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
-        
         if(res.ok) {
             const data = await res.json();
-            
+            const years = Object.keys(data.total).map(Number).sort((a, b) => a - b);
+            years.pop(); // Remove ano atual incompleto
             let totalCommits = 0;
-
-            const years = Object.keys(data.total);
-            years.forEach(year => {
-                totalCommits += data.total[year];
-            });
-
+            years.forEach(year => totalCommits += data.total[year]);
+            
             if (totalCommits > 0) {
                 let displayVal = totalCommits;
-                if(totalCommits > 1000) {
-                     displayVal = (totalCommits / 1000).toFixed(1) + "k+";
-                }
-                
-                state.githubStats.commits = displayVal; 
+                if(totalCommits > 1000) displayVal = (totalCommits / 1000).toFixed(1) + "k+";
+                state.githubStats.commits = displayVal;
                 commitsEl.textContent = displayVal;
             }
         }
-    } catch (e) {
-        console.log("API de Commits falhou.", e);
-    }
+    } catch (e) { console.log("GitHub Commits Error", e); }
 }
+
+// --- SISTEMA DE RADAR DO MOUSE (PARENT TO IFRAME) ---
+// Isso permite que o efeito funcione mesmo com o mouse sobre textos/botões
+document.addEventListener('mousemove', (e) => {
+    // Só envia se o perfil GAME estiver ativo
+    if (state.profile !== 'game') return;
+
+    const bgFrame = document.getElementById('game-bg-frame');
+    if (bgFrame && bgFrame.contentWindow) {
+        // Calcula a porcentagem X e Y da tela inteira
+        const posX = (e.clientX / window.innerWidth) * 100;
+        const posY = (e.clientY / window.innerHeight) * 100;
+
+        // Envia mensagem segura para o iframe
+        bgFrame.contentWindow.postMessage({
+            type: 'MOUSE_MOVE',
+            x: posX,
+            y: posY
+        }, '*'); // '*' permite envio local, ideal para desenvolvimento
+    }
+});

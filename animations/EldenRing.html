@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --bg: #050505;
+            --core-white: #ffffff;
+            --gold-primary: #ffcc00;
+            --gold-secondary: #ffaa00;
+            --glow-outer: #ff4500;
+            --dark-base: #2a2200; /* Cor escura do objeto sólido */
+            /* Variáveis que serão atualizadas pelo script pai */
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: var(--bg);
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #1a1200 0%, var(--bg) 90%);
+        }
+
+        .elden-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            /* Escala para preencher o fundo */
+            transform: scale(1.6);
+            filter: drop-shadow(0 0 8px var(--gold-secondary));
+        }
+
+        /* =========================================
+           1. GRADE E PARTÍCULAS
+           ========================================= */
+        .interactive-grid {
+            position: absolute;
+            width: 100%; height: 100%;
+            z-index: 1;
+            opacity: 0; 
+            transition: opacity 0.2s ease;
+            background: 
+                linear-gradient(45deg, transparent 49%, var(--gold-secondary) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, var(--gold-secondary) 50%, transparent 51%);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle 120px at var(--mouse-x) var(--mouse-y), black 0%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle 120px at var(--mouse-x) var(--mouse-y), black 0%, transparent 80%);
+        }
+        
+        .elden-container.interacting .interactive-grid { opacity: 0.3; }
+
+        #particle-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 20;
+        }
+
+        .ember {
+            position: absolute;
+            background: var(--core-white);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 2px var(--gold-primary), 0 0 4px var(--gold-secondary), 0 0 8px var(--glow-outer);
+            opacity: 0;
+        }
+
+        @keyframes ember-float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { opacity: 0.8; background: var(--gold-primary); }
+            100% { transform: translateY(-80px) scale(0) translateX(var(--drift-x)); opacity: 0; }
+        }
+
+        /* =========================================
+           2. ESTILO VISUAL: DARK SOLID + NEON
+           ========================================= */
+        
+        /* Classe para elementos de BORDA (Anéis e Arcos) */
+        .dark-neon-border {
+            position: absolute;
+            background: transparent;
+            /* Linha escura sólida */
+            border: 3px solid var(--dark-base);
+            /* Brilho externo */
+            box-shadow: 
+                0 0 3px var(--core-white),
+                0 0 8px var(--gold-primary),
+                0 0 25px var(--glow-outer);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Classe para a LINHA CENTRAL (Fina e Sólida) */
+        .spike-solid-thin {
+            position: absolute;
+            background-color: var(--dark-base);
+            /* FINA: 3px */
+            width: 3px; 
+            height: 300px;
+            border: none;
+            /* Brilho externo */
+            box-shadow: 
+                0 0 3px var(--core-white),
+                0 0 8px var(--gold-primary),
+                0 0 25px var(--glow-outer);
+            
+            z-index: 5;
+            pointer-events: none;
+            top: 100px; 
+            left: 50%; 
+            transform: translateX(-50%);
+        }
+
+        /* =========================================
+           3. GEOMETRIA
+           ========================================= */
+
+        /* Anéis */
+        .ring { width: 100px; height: 100px; border-radius: 50%; left: 50%; top: 250px; }
+        .ring-center { transform: translate(-50%, -50%); z-index: 10; }
+        .ring-up { transform: translate(-50%, calc(-50% - 40px)); }
+        .ring-left { transform: translate(calc(-50% - 40px), -50%); }
+        .ring-right { transform: translate(calc(-50% + 40px), -50%); }
+
+        /* Arcos (Pontas limpas via clip-path) */
+        .top-arc {
+            width: 200px; height: 200px;
+            clip-path: inset(85% 0 0 0);
+            border-radius: 50%;
+            top: -100px; left: 50%; transform: translateX(-50%);
+        }
+
+        .bottom-arc {
+            width: 350px; height: 350px;
+            clip-path: inset(85% 0 0 0);
+            border-radius: 50%;
+            top: 20px; left: 50%; transform: translateX(-50%);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="particle-layer"></div>
+
+    <div class="elden-container" id="container">
+        <div class="interactive-grid"></div>
+        
+        <div class="spike-solid-thin"></div>
+        
+        <div class="dark-neon-border top-arc"></div>
+        <div class="dark-neon-border bottom-arc"></div>
+        
+        <div class="dark-neon-border ring ring-center"></div>
+        <div class="dark-neon-border ring ring-up"></div>
+        <div class="dark-neon-border ring ring-left"></div>
+        <div class="dark-neon-border ring ring-right"></div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const particleLayer = document.getElementById('particle-layer');
+        let isInteracting = false;
+        let interactionTimer;
+
+        // Função para criar partículas
+        // Recebe X e Y em porcentagem (0-100)
+        function createEmber(xPercent, yPercent) {
+            const ember = document.createElement('div');
+            ember.classList.add('ember');
+            const size = Math.random() * 3 + 1;
+            ember.style.width = `${size}px`;
+            ember.style.height = `${size}px`;
+            
+            // Posiciona em % para alinhar com o mouse do pai
+            ember.style.left = `${xPercent}%`;
+            ember.style.top = `${yPercent}%`;
+
+            const driftX = (Math.random() - 0.5) * 50 + 'px';
+            ember.style.setProperty('--drift-x', driftX);
+
+            const duration = Math.random() * 1 + 0.8;
+            ember.style.animation = `ember-float ${duration}s ease-out forwards`;
+
+            particleLayer.appendChild(ember);
+            setTimeout(() => ember.remove(), duration * 1000);
+        }
+
+        // LISTENER DE MENSAGEM (Essencial para funcionar como Background)
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'MOUSE_MOVE') {
+                const posX = event.data.x; // % X
+                const posY = event.data.y; // % Y
+
+                // 1. Atualiza variáveis da Grade
+                container.style.setProperty('--mouse-x', `${posX}%`);
+                container.style.setProperty('--mouse-y', `${posY}%`);
+
+                // 2. Ativa estado de interação
+                if (!isInteracting) {
+                    container.classList.add('interacting');
+                    isInteracting = true;
+                }
+                clearTimeout(interactionTimer);
+                interactionTimer = setTimeout(() => {
+                    // container.classList.remove('interacting'); // Opcional
+                }, 500);
+
+                // 3. Cria partículas (Chance aleatória)
+                const chance = Math.random(); 
+                if (chance > 0.4) createEmber(posX, posY);
+                if (chance > 0.85) createEmber(posX, posY);
+            }
+        });
+    </script>
+</body>
+</html>

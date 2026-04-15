@@ -17,7 +17,7 @@
       "commits_label": "Commits",
       "clients_label": "Clientes",
       "lang_btn": "EN",
-      "cta_btn": "Solicitar Orçamento"
+      "cta_btn": "Entrar em contato"
     },
     "en": {
       "nav_home": "Home",
@@ -28,7 +28,7 @@
       "nav_contact": "Contact",
       "stats_title": "Skills & Metrics",
       "stack_title": "Tech Stack",
-      "education_title": "Education",
+      "education_title": "Academic Background",
       "languages_title": "Languages",
       "projects_title": "Featured Projects",
       "repos_label": "Repositories",
@@ -36,115 +36,85 @@
       "commits_label": "Commits",
       "clients_label": "Clients",
       "lang_btn": "PT",
-      "cta_btn": "Get a Quote"
+      "cta_btn": "Get in touch"
     }
   },
   "profiles": {
     "dev": {
       "id": "dev",
-      "themeColor": "#ff3333", 
+      "themeColor": "#ff0000", 
       "stats": {
         "clients": "5+",
         "xp_years": "2",
-        "commits_fallback": " ",
-        "mainStack": ["NestJS", "Spring", "Go", "React", "Docker", "Python", "Flutter", "PostgreSQL"]
+        "commits_fallback": "500+",
+        "mainStack": ["React", "TypeScript", "Node.js", "NestJS", "PostgreSQL", "Docker", "Python", "AWS"]
       },
       "pt": {
         "brandName": "LucasDev.",
-        "role": "Engenheiro de Software Full Stack",
-        "heroTitle": "Backend Robusto & Arquitetura",
-        "heroSubtitle": "Especialista em APIs REST, Microsserviços e integração de sistemas.",
+        "role": "Desenvolvedor Full Stack | React & TypeScript",
+        "heroTitle": "Interfaces Modernas & Aplicações Escaláveis",
+        "heroSubtitle": "Foco em front-end com React, construindo soluções SaaS, APIs robustas e arquiteturas limpas.",
         "education": [
-          { "school": "FATEC", "course": "Tecnólogo em Análise e Desenvolvimento de Sistemas", "date": "2022 - 2025" },
-          { "school": "Senac", "course": "Técnico em Tecnologia da Informação", "date": "2017 - 2018" }
+          { "school": "FATEC", "course": "Tecnólogo em ADS", "date": "Previsão: Julho 2026" },
+          { "school": "SENAC", "course": "Técnico em Informática", "date": "Concluído em 2018" }
         ],
-        "languages": ["Português (Fluente)", "Inglês (Intermediário)"],
+        "languages": ["Português (Nativo)", "Inglês (Intermediário)"],
         "resume": [
-          { "role": "Desenvolvedor Full Stack", "company": "Whodo (SaaS)", "date": "2025", "desc": "Evolução de módulos backend (Go) e frontend (React)." },
-          { "role": "Desenvolvedor de Dados & IA", "company": "Compass UOL", "date": "2024 - 2025", "desc": "Pipelines ETL com Python e AWS." },
-          { "role": "Desenvolvedor Web Full Stack", "company": "Projetos Corporativos", "date": "2024 - 2025", "desc": "Desenvolvimento PHP/WordPress e servidores Apache." }
+          { "role": "Desenvolvedor Full Stack (Front-end)", "company": "Whodo (SaaS)", "date": "2025", "desc": "Desenvolvimento de módulos SaaS com React e TypeScript, integração de APIs e controle de permissões." },
+          { "role": "Programador Front-end", "company": "WordPress & Web", "date": "2024 - 2025", "desc": "Customização de temas em PHP/JS e integração com Shopify/Tray." },
+          { "role": "Estagiário de Dados e IA", "company": "Compass UOL", "date": "2024 - 2025", "desc": "Pipelines de dados, dashboards e automação com Docker e Python." }
         ],
         "projects": [
           {
-            "title": "Análise de Dados Socioculturais",
-            "desc": "Pipeline de Big Data com PySpark e AWS.",
-            "images": ["/img/proj-cinema-1.png"],
-            "stack": ["Python", "AWS", "Docker"]
+            "title": "ERP SaaS Multi-tenant",
+            "desc": "Sistema completo para prestadores de serviço com NestJS, React e controle de acesso complexo.",
+            "stack": ["React", "TypeScript", "Node.js", "PostgreSQL"]
+          },
+          {
+            "title": "Aplicativo Educacional",
+            "desc": "App Mobile/Web com autenticação em tempo real e estrutura Firebase.",
+            "stack": ["Flutter", "Firebase"]
+          },
+          {
+            "title": "Análise de Dados",
+            "desc": "Dashboards interativos e padronização de ambientes com Docker.",
+            "stack": ["Power BI", "Python", "Docker"]
           }
         ]
       },
       "en": {
         "brandName": "LucasDev.",
-        "role": "Full Stack Software Engineer",
-        "heroTitle": "Robust Backend & Architecture",
-        "heroSubtitle": "Specialist in REST APIs and Microservices.",
-        "education": [],
-        "languages": ["Portuguese (Fluent)", "English (Intermediate)"],
-        "resume": [],
-        "projects": []
+        "role": "Full Stack Developer | React & TypeScript",
+        "heroTitle": "Modern Interfaces & Scalable Applications",
+        "heroSubtitle": "Focus on React front-end, building SaaS solutions, robust APIs, and clean architectures.",
+        "education": [
+          { "school": "FATEC", "course": "Systems Analysis and Development", "date": "Expected: July 2026" },
+          { "school": "SENAC", "course": "IT Technician", "date": "Completed in 2018" }
+        ],
+        "languages": ["Portuguese (Native)", "English (Intermediate)"],
+        "resume": [
+          { "role": "Full Stack Developer (Front-end focus)", "company": "Whodo (SaaS)", "date": "2025", "desc": "Development of SaaS modules using React and TypeScript, API integration, and permission control." },
+          { "role": "Front-end Programmer", "company": "WordPress & Web", "date": "2024 - 2025", "desc": "Theme customization using PHP/JS and integration with Shopify/Tray." },
+          { "role": "Data & AI Intern", "company": "Compass UOL", "date": "2024 - 2025", "desc": "Data pipelines, dashboards, and automation using Docker and Python." }
+        ],
+        "projects": [
+          {
+            "title": "Multi-tenant ERP SaaS",
+            "desc": "Full system for service providers featuring NestJS, React, and complex access control.",
+            "stack": ["React", "TypeScript", "Node.js", "PostgreSQL"]
+          },
+          {
+            "title": "Educational Application",
+            "desc": "Mobile/Web app with real-time authentication and Firebase data structure.",
+            "stack": ["Flutter", "Firebase"]
+          },
+          {
+            "title": "Data Analysis",
+            "desc": "Interactive dashboards and environment standardization using Docker.",
+            "stack": ["Power BI", "Python", "Docker"]
+          }
+        ]
       }
-    },
-    "game": {
-        "id": "game",
-        "themeColor": "#ffaa00",
-        "stats": {
-          "clients": "5+",
-          "xp_years": "2+",
-          "commits_fallback": "1k+",
-          "mainStack": ["Unity", "Csharp", "Blender", "Unreal"]
-        },
-        "pt": {
-             "brandName": "LucasDevGame.",
-             "role": "Engenheiro de Jogos e Simulação",
-             "heroTitle": "Sistemas Interativos & Física",
-             "heroSubtitle": "Engenharia de software aplicada a engines de jogos.",
-             "education": [],
-             "languages": [],
-             "resume": [
-                { "role": "Engenheiro de Gameplay", "company": "RPG Life Project", "date": "2025", "desc": "Sistemas de persistência de dados e lógica de servidor." }
-             ],
-             "projects": []
-        },
-        "en": {
-             "brandName": "LucasDevGame.",
-             "role": "Game & Simulation Engineer",
-             "heroTitle": "Interactive Systems & Physics",
-             "heroSubtitle": "Software engineering applied to game engines.",
-             "education": [],
-             "languages": [],
-             "resume": [],
-             "projects": []
-        }
-    },
-    "art3d": {
-        "id": "art3d",
-        "themeColor": "#ff9900",
-        "stats": {
-          "clients": "5+",
-          "xp_years": "2+",
-          "commits_fallback": "N/A",
-          "mainStack": ["Blender", "Maya", "Threejs", "WebGL"]
-        },
-        "pt": {
-             "brandName": "LucasDev3D.",
-             "role": "Technical Artist (3D)",
-             "heroTitle": "Computação Gráfica & Modelagem",
-             "heroSubtitle": "Desenvolvimento de assets otimizados.",
-             "education": [],
-             "languages": [],
-             "resume": [],
-             "projects": []
-        },
-        "en": {
-             "brandName": "LucasDev3D.",
-             "role": "Technical Artist (3D)",
-             "heroTitle": "Computer Graphics & Modeling",
-             "heroSubtitle": "Optimized assets development.",
-             "education": [],
-             "languages": [],
-             "resume": [],
-             "projects": []
-        }
     }
   }
 }

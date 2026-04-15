@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Casa 3D Neon</title>
+
+<style>
+:root {
+    /* Dimensões */
+    --base: 220px;       /* Largura da casa */
+    --wall-h: 120px;     /* Altura da parede */
+    
+    /* Matemática do Telhado (Pitágoras para fechar certinho) 
+       Para base 220px (metade 110px) e ângulo 45graus:
+       Hipotenusa ~= 156px */
+    --roof-face-h: 156px; 
+    --roof-angle: 45deg; 
+
+    /* Cores */
+    --neon: #00f3ff;
+    --glass: rgba(0, 243, 255, 0.15);
+    --bg: #05070c;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px; /* Profundidade 3D */
+    overflow: hidden;
+}
+
+.scene {
+    transform-style: preserve-3d;
+    /* Gira a câmera ao redor da casa */
+    animation: spin-scene 20s linear infinite;
+}
+
+.house {
+    position: relative;
+    width: var(--base);
+    height: var(--base);
+    transform-style: preserve-3d;
+}
+
+/* ================= PAREDES ================= */
+
+.wall {
+    position: absolute;
+    width: var(--base);
+    height: var(--wall-h);
+    /* Usar box-shadow inset ajuda a dar profundidade no vidro */
+    box-shadow: inset 0 0 15px rgba(0,243,255,0.1);
+    border: 2px solid var(--neon);
+    background: var(--glass);
+    
+    /* Centraliza o conteúdo (porta/janela) */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Alinha porta no chão */
+    
+    /* Configuração inicial da animação */
+    transform-origin: bottom;
+    opacity: 0;
+    animation: drop-wall 1s ease-out forwards;
+}
+
+/* Posicionamento 3D das Paredes */
+.wall.front { transform: translateZ(calc(var(--base) / 2)); animation-delay: 0.2s; }
+.wall.back  { transform: rotateY(180deg) translateZ(calc(var(--base) / 2)); animation-delay: 0.2s; }
+.wall.left  { transform: rotateY(-90deg) translateZ(calc(var(--base) / 2)); animation-delay: 0.4s; }
+.wall.right { transform: rotateY(90deg) translateZ(calc(var(--base) / 2)); animation-delay: 0.4s; }
+
+/* ================= TELHADO ================= */
+
+.roof {
+    position: absolute;
+    top: calc(var(--wall-h) * -1); /* Fica em cima da parede */
+    left: 0;
+    width: var(--base);
+    height: var(--roof-face-h);
+    transform-style: preserve-3d;
+}
+
+.roof-face {
+    position: absolute;
+    width: var(--base);
+    height: var(--roof-face-h);
+    
+    /* Forma triangular */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background: var(--glass);
+    
+    /* O clip-path corta a borda padrão, então usamos drop-shadow para simular borda neon */
+    filter: drop-shadow(0 0 2px var(--neon)); 
+
+    transform-origin: bottom center;
+    opacity: 0;
+    animation: close-roof 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Posicionamento e Rotação do Telhado 
+   Nota: O ângulo é calculado para fechar a pirâmide */
+.roof-face.front {
+    transform: translateZ(calc(var(--base) / 2)) rotateX(var(--roof-angle));
+    animation-delay: 0.8s;
+    --rot-final: rotateX(var(--roof-angle));
+}
+
+.roof-face.back {
+    transform: translateZ(calc(var(--base) / -2)) rotateY(180deg) rotateX(var(--roof-angle));
+    animation-delay: 0.9s;
+    --rot-final: rotateY(180deg) rotateX(var(--roof-angle));
+}
+
+.roof-face.left {
+    transform: translateX(calc(var(--base) / -2)) rotateY(-90deg) rotateX(var(--roof-angle));
+    animation-delay: 1.0s;
+    --rot-final: rotateY(-90deg) rotateX(var(--roof-angle));
+}
+
+.roof-face.right {
+    transform: translateX(calc(var(--base) / 2)) rotateY(90deg) rotateX(var(--roof-angle));
+    animation-delay: 1.1s;
+    --rot-final: rotateY(90deg) rotateX(var(--roof-angle));
+}
+
+/* ================= DETALHES (PORTA/JANELA) ================= */
+
+.door {
+    width: 50px;
+    height: 80px;
+    border: 2px solid var(--neon);
+    background: rgba(0, 243, 255, 0.3);
+    box-shadow: 0 0 10px var(--neon);
+    margin-bottom: 0; /* Cola no chão */
+    
+    opacity: 0;
+    animation: fade-in 1s ease forwards;
+    animation-delay: 1.5s;
+}
+
+.window {
+    position: absolute;
+    top: 20px;
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--neon);
+    background: rgba(0, 243, 255, 0.3);
+    box-shadow: 0 0 10px var(--neon);
+    
+    opacity: 0;
+    animation: fade-in 1s ease forwards;
+    animation-delay: 1.7s;
+}
+
+/* ================= KEYFRAMES ================= */
+
+@keyframes spin-scene {
+    from { transform: rotateX(-20deg) rotateY(0deg); }
+    to   { transform: rotateX(-20deg) rotateY(360deg); }
+}
+
+/* Paredes caem do céu */
+@keyframes drop-wall {
+    from {
+        opacity: 0;
+        transform: translateY(-400px) var(--transform-base); /* Precisa manter a posição X/Z base */
+    }
+    to {
+        opacity: 1;
+        /* Como definimos o transform direto na classe (ex: .wall.front), 
+           o 'to' aqui é apenas para garantir opacidade, o CSS nativo cuida da posição final
+           se usarmos 'forwards' e a estrutura correta, mas aqui faremos um truque visual:
+           O animation começa do 'from' e vai para o estilo definido na classe. */
+    }
+}
+/* Obs: Para o drop-wall funcionar perfeito sobrescrevendo o transform, 
+   o ideal seria separar o wrapper, mas para simplificar, 
+   vamos animar apenas a Opacidade e um translateY wrapper ou usar uma técnica de "ScaleY" */
+
+/* Correção da animação das paredes para este layout: 
+   Como as paredes já têm transforms complexos, vamos animar "clip-path" ou "height" 
+   para parecer que estão sendo construídas do chão para cima. */
+
+@keyframes drop-wall {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    100% {
+        height: var(--wall-h);
+        opacity: 1;
+    }
+}
+
+/* Telhado fecha como uma flor */
+@keyframes close-roof {
+    0% {
+        opacity: 0;
+        transform: var(--rot-final) rotateX(90deg); /* Começa aberto/plano */
+    }
+    100% {
+        opacity: 1;
+        transform: var(--rot-final); /* Posição final definida na classe */
+    }
+}
+
+@keyframes fade-in {
+    to { opacity: 1; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="scene">
+    <div class="house">
+
+        <div class="wall front">
+            <div class="window"></div>
+            <div class="door"></div>
+        </div>
+
+        <div class="wall back"></div>
+        <div class="wall left"></div>
+        <div class="wall right"></div>
+
+        <div class="roof">
+            <div class="roof-face front"></div>
+            <div class="roof-face back"></div>
+            <div class="roof-face left"></div>
+            <div class="roof-face right"></div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

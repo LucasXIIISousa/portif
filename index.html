@@ -7,45 +7,36 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <iframe id="game-bg-frame" class="full-screen-bg hidden" scrolling="no"></iframe>
-
-    <div id="intro-overlay" class="intro-overlay">
-        <h1 class="intro-title">Choose your Character</h1>
+    <div class="intro-overlay" id="intro-overlay">
+        <h1 class="intro-title">Selecione o Perfil</h1>
         <div class="profile-selector">
             <button class="select-btn dev-btn" data-profile="dev">
-                <i class="fas fa-code"></i> Developer
+                <i class="fas fa-code"></i>
+                <span>Software Developer</span>
             </button>
             <button class="select-btn game-btn" data-profile="game">
-                <i class="fas fa-gamepad"></i> Game Dev
+                <i class="fas fa-gamepad"></i>
+                <span>Game Engine Dev</span>
             </button>
             <button class="select-btn art-btn" data-profile="art3d">
-                <i class="fas fa-cube"></i> 3D Artist
+                <i class="fas fa-cube"></i>
+                <span>3D Technical Artist</span>
             </button>
         </div>
     </div>
 
-    <div class="top-controls">
-        <button id="theme-toggle" class="control-btn hidden">
-            <i class="fas fa-sun"></i>
-        </button>
-        <button id="lang-toggle" class="control-btn">
-            EN
-        </button>
-    </div>
-
-    <button id="mobile-toggle">
-        <i class="fas fa-bars"></i>
-    </button>
+    <button id="mobile-toggle"><i class="fas fa-bars"></i></button>
 
     <div class="layout hidden" id="main-layout">
         
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="img-container">
-                    <img src="imgProject/profile-pic.png" alt="Lucas Sousa" class="sidebar-profile-img">
+                    <img src="https://github.com/LucasXIIISousa.png" alt="Lucas Sousa" class="sidebar-profile-img">
                 </div>
                 <div class="brand">
                     <span id="brand-text">LucasDev.</span>
@@ -53,86 +44,90 @@
             </div>
 
             <nav>
-                <a href="#hero" class="active"><i class="fas fa-home"></i> <span data-i18n="nav_home">Início</span></a>
-                <a href="#bento"><i class="fas fa-chart-pie"></i> <span data-i18n="nav_stats">Métricas</span></a>
+                <a href="#home" class="active"><i class="fas fa-home"></i> <span data-i18n="nav_home">Início</span></a>
+                <a href="#stats"><i class="fas fa-chart-bar"></i> <span data-i18n="nav_stats">Métricas</span></a>
                 <a href="#education"><i class="fas fa-graduation-cap"></i> <span data-i18n="nav_education">Formação</span></a>
                 <a href="#resume"><i class="fas fa-briefcase"></i> <span data-i18n="nav_xp">Carreira</span></a>
                 <a href="#projects"><i class="fas fa-project-diagram"></i> <span data-i18n="nav_projects">Projetos</span></a>
             </nav>
-            
+
+            <div id="sidebar-visual" style="margin-top: 2rem; height: 150px; position: relative;">
+                <iframe id="anim-frame" class="anim-frame" src="" scrolling="no"></iframe>
+            </div>
+
             <div class="socials">
                 <a href="https://github.com/LucasXIIISousa" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/lucasxiiisousa" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://linkedin.com/in/lucas-sousa-dev" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://wa.me/5516991199405?text=Bom%20dia%20vi%20seu%20portfolio" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
         </aside>
 
         <main class="content">
-            <section id="hero" class="hero-section">
-                <div class="hero-text">
-                    <span class="role-badge" id="hero-role">Loading...</span>
-                    <h1 id="hero-title">...</h1>
-                    <p id="hero-subtitle">...</p>
-                    <a href="#contact" class="cta-button" data-i18n="cta_btn">Contato</a>
-                </div>
+            <div class="top-controls">
+                <button class="control-btn" id="lang-toggle">EN</button>
+                <button class="control-btn" id="theme-toggle"><i class="fas fa-sun"></i></button>
+            </div>
 
-                <div class="hero-visual" id="sidebar-visual">
-                    <iframe id="anim-frame" class="anim-frame" scrolling="no"></iframe>
-                    <div class="glow-effect"></div>
+            <section id="home" class="hero-section">
+                <div class="hero-text">
+                    <span class="role-badge" id="hero-role">Full Stack Developer</span>
+                    <h1 id="hero-title">Construindo o futuro da Web</h1>
+                    <p id="hero-subtitle">Especialista em criar soluções digitais de alto impacto.</p>
+                    <a href="https://wa.me/5516991199405?text=Bom%20dia%20vi%20seu%20portfolio" target="_blank" class="cta-button" data-i18n="cta_btn">Entrar em contato</a>
                 </div>
             </section>
 
-            <section id="bento" class="section-padding">
-                <h2 class="section-title" data-i18n="stats_title">Visão Geral</h2>
+            <section id="stats" class="section-padding">
+                <h2 class="section-title" data-i18n="stats_title">Competências</h2>
                 <div class="bento-grid">
                     <div class="bento-box box-large stack-box">
-                        <h4 data-i18n="stack_title">Tech Stack</h4>
-                        <div id="stack-container" class="tech-grid"></div>
+                        <h4 data-i18n="stack_title">Stack Tecnológica</h4>
+                        <div class="tech-grid" id="stack-container"></div>
                     </div>
-                    <div class="bento-box box-medium stat-box">
+                    <div class="bento-box box-medium">
                         <i class="fab fa-github box-icon"></i>
-                        <span id="stat-repos" class="big-number">--</span>
+                        <span class="big-number" id="stat-repos">--</span>
                         <p data-i18n="repos_label">Repositórios</p>
                     </div>
-                    <div class="bento-box box-medium stat-box">
-                        <i class="fas fa-hourglass-half box-icon"></i>
-                        <span id="stat-years" class="big-number">--</span>
-                        <p data-i18n="xp_label">Anos</p>
-                    </div>
-                    <div class="bento-box box-medium stat-box">
-                        <i class="fas fa-code-branch box-icon"></i>
-                        <span id="stat-commits" class="big-number">0</span>
+                    <div class="bento-box box-medium">
+                        <i class="fas fa-terminal box-icon"></i>
+                        <span class="big-number" id="stat-commits">--</span>
                         <p data-i18n="commits_label">Commits</p>
                     </div>
-                    <div class="bento-box box-medium stat-box">
-                        <i class="fas fa-users box-icon"></i>
-                        <span id="stat-clients" class="big-number">0</span>
+                    <div class="bento-box box-medium">
+                        <i class="fas fa-user-check box-icon"></i>
+                        <span class="big-number" id="stat-clients">--</span>
                         <p data-i18n="clients_label">Clientes</p>
+                    </div>
+                    <div class="bento-box box-medium">
+                        <i class="fas fa-calendar-alt box-icon"></i>
+                        <span class="big-number" id="stat-years">--</span>
+                        <p data-i18n="xp_label">Anos</p>
                     </div>
                 </div>
             </section>
 
-            <section id="education" class="section-padding">
-                <h2 class="section-title" data-i18n="education_title">Formação</h2>
-                <div id="education-container" class="list-grid"></div>
-            </section>
+            <div class="list-grid">
+                <section id="education" class="section-padding">
+                    <h2 class="section-title" data-i18n="education_title">Educação</h2>
+                    <div id="education-container" class="projects-list"></div>
+                </section>
+            </div>
 
             <section id="resume" class="section-padding">
-                <h2 class="section-title" data-i18n="nav_xp">Carreira</h2>
+                <h2 class="section-title" data-i18n="nav_xp">Experiência Profissional</h2>
                 <div class="resume-scroller" id="resume-container"></div>
-            </section>
-
-            <section id="languages" class="section-padding">
-                <h2 class="section-title" data-i18n="languages_title">Idiomas</h2>
-                <div id="languages-container" class="lang-grid"></div>
             </section>
 
             <section id="projects" class="section-padding">
                 <h2 class="section-title" data-i18n="projects_title">Projetos</h2>
                 <div id="projects-container" class="projects-list"></div>
             </section>
-
         </main>
     </div>
+
+    <iframe id="game-bg-frame" class="full-screen-bg hidden" src=""></iframe>
+
     <script src="script.js"></script>
 </body>
 </html>
